@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Repository;
-
 use App\Entity\Campus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
 /**
  * @method Campus|null find($id, $lockMode = null, $lockVersion = null)
  * @method Campus|null findOneBy(array $criteria, array $orderBy = null)
@@ -18,7 +15,6 @@ class CampusRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Campus::class);
     }
-
     // /**
     //  * @return Campus[] Returns an array of Campus objects
     //  */
@@ -35,7 +31,6 @@ class CampusRepository extends ServiceEntityRepository
         ;
     }
     */
-
     /*
     public function findOneBySomeField($value): ?Campus
     {
