@@ -17,7 +17,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route ('/sorties/filter', name="liste_sorties_filtree")
+     * @Route ("/sorties/filter", name="liste_sorties_filtree")
      */
     public function listeSortieFilter(){
 
