@@ -68,20 +68,20 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $estInscrit;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateurs")
-     */
-    private $organisateur;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="estRattache")
      * @ORM\JoinColumn(nullable=false)
      */
     private $campus;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateurs")
+     */
+    private $sorties_organisateur;
+
     public function __construct()
     {
         $this->estInscrit = new ArrayCollection();
-        $this->organisateur = new ArrayCollection();
+        $this->sorties_organisateur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,36 +252,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Sortie[]
-     */
-    public function getOrganisateur(): Collection
-    {
-        return $this->organisateur;
-    }
-
-    public function addOrganisateur(Sortie $organisateur): self
-    {
-        if (!$this->organisateur->contains($organisateur)) {
-            $this->organisateur[] = $organisateur;
-            $organisateur->setOrganisateurs($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrganisateur(Sortie $organisateur): self
-    {
-        if ($this->organisateur->removeElement($organisateur)) {
-            // set the owning side to null (unless already changed)
-            if ($organisateur->getOrganisateurs() === $this) {
-                $organisateur->setOrganisateurs(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCampus(): ?Campus
     {
         return $this->campus;
@@ -290,6 +260,36 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCampus(?Campus $campus): self
     {
         $this->campus = $campus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSortiesOrganisateur(): Collection
+    {
+        return $this->sorties_organisateur;
+    }
+
+    public function addOrganisateur(Sortie $organisateur): self
+    {
+        if (!$this->sorties_organisateur->contains($organisateur)) {
+            $this->sorties_organisateur[] = $organisateur;
+            $organisateur->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganisateur(Sortie $organisateur): self
+    {
+        if ($this->sorties_organisateur->removeElement($organisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($organisateur->getOrganisateur() === $this) {
+                $organisateur->setOrganisateur(null);
+            }
+        }
 
         return $this;
     }

@@ -61,12 +61,6 @@ class Sortie
     private $participantsInscrits;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateur")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $organisateurs;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="siteOrganisateur")
      */
     private $campus;
@@ -76,6 +70,12 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $Lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sorties_organisateur")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
 
     public function __construct()
     {
@@ -198,18 +198,6 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateurs(): ?Participant
-    {
-        return $this->organisateurs;
-    }
-
-    public function setOrganisateurs(?Participant $organisateurs): self
-    {
-        $this->organisateurs = $organisateurs;
-
-        return $this;
-    }
-
     public function getCampus(): ?Campus
     {
         return $this->campus;
@@ -230,6 +218,18 @@ class Sortie
     public function setLieu(?Lieu $Lieu): self
     {
         $this->Lieu = $Lieu;
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
 
         return $this;
     }
