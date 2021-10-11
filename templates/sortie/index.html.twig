@@ -1,10 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}Liste des sorties{% endblock %}
 
 {% block contenu %}
+<div>
+    <div class="titre">
+        <h3> Filtrer les sorties</h3>
+    </div>
+
+    <div class="listeCampus">
+        <select>
+        {% for campus in listeCampus %}
+            <option value="{{ campus.id }}">{{ campus.nom }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <div class="listeSortie">
+        <div class="sortie">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">Inscrits/places</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for sortie in listeSortie %}
+                        <th scope="row"> {{ sortie.nom }}</th>
+                        <td> {{ sortie.dateHeureDebut }}</td>
+                        <td> {{ sortie.dateLimiteInscription }}</td>
+                        <td> {{ sortie.particpantsInscrits }}{{ sortie.nbInscriptionsMax }}</td>
+                        <td> {{ sortie.etat.nom }}</td>
+                        <td> {% if app.user.estInscrit  %}
+                                <img src="{{ asset('img/icons8-coche-48.png') }}" alt="icone coché">
+                            {% endif %}
+                        </td>
+                        <td> {{ sortie.organisateur }}</td>
+                        <td>
+                            <a href="#">Afficher</a>
+
+                        {% if app.user.estInscrit %}
+                            <a href="#">Se désister</a>
+                        {% endif %}
+                            {% if sortie.organisateur == app.user %}
+                                <a href="#">Modifier</a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
-    {% for sortie in listeSortie %}
-    {% endfor %}
+
 {% endblock %}
