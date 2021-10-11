@@ -17,6 +17,17 @@
         {% endblock %}
     </head>
     <body>
+    {% block header %}
+        <div class="logo">
+            <a href="{{ path('main') }}" class="logo"><img src="{{ asset('img/logo.png') }}" alt="logo du site">Sortir.com</a>
+        </div>
+    <div class="nav">
+        <a href="#">Villes</a>
+        <a href="#">Campus</a>
+        <a href="#">Mon profil</a>
+        <a href="#">Se déconnecter</a>
+    </div>
+    {% endblock %}
         {% block contenu %}{% endblock %}
     </body>
 </html>
