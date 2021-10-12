@@ -5,9 +5,37 @@
         {{ infosUser.username }}
     {% endfor %}
     {{ form_start(formModif) }}
-    {{ form_widget(formModif)}}
-    <button> Envoyer</button>
-    {{ form_end(formModif) }}
+                    <div class="username">
+                        <label for="">Pseudo</label>
+                        {{ form_widget(formModif.username, {'value' : app.user.userIdentifier}) }}
+                    </div>
+                    <div>
+                        <label for="">Prénom</label>
+                        {{ form_widget(formModif.prenom, {'value' : app.user.prenom}) }}
+                    </div>
+                    <div>
+                        <label for="">Nom</label>
+                        {{ form_widget(formModif.nom, {'value' : app.user.nom}) }}
+                    </div>
+                    <div>
+                        <label for="">Téléphone</label>
+                        {{ form_widget(formModif.telephone, {'value' : app.user.telephone}) }}
+                    </div>
+                    <div>
+                        <label for="">Email</label>
+                        {{ form_widget(formModif.email, {'value' : app.user.email}) }}
+                    </div>
+                    <div>
+                        <label for="">Mot de passe</label>
+                        {{ form_widget(formModif.password, {'value' : app.user.password}) }}
+                    </div>
+                    <div>
+                        <label for="">Campus</label>
+                        {{ form_widget(formModif.campus, {'value' : app.user.campus}) }}
+                    </div>
+                        <button> Enregistrer</button>
+                        <button> Annuler</button>
+                        {{ form_end(formModif) }}
 {% endblock %}
 
 {% block title %}

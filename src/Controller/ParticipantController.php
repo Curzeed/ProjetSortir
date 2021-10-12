@@ -26,6 +26,7 @@ class ParticipantController extends AbstractController
      */
     public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
     {
+        //instantiaton
         $newParticipant = new Participant();
         $formModif = $this->createForm(ParticipantModifType::class,$newParticipant);
         $formModif -> handleRequest($request);
