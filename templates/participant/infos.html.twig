@@ -4,6 +4,10 @@
     {% for infosUser in infos %}
         {{ infosUser.username }}
     {% endfor %}
+    {{ form_start(formModif) }}
+    {{ form_widget(formModif)}}
+    <button> Envoyer</button>
+    {{ form_end(formModif) }}
 {% endblock %}
 
 {% block title %}

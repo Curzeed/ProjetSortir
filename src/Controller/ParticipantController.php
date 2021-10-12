@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\ParticipantModifType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,10 +24,18 @@ class ParticipantController extends AbstractController
     /**
      * @Route ("/monProfil/{id}" , name="profil_participant")
      */
-    public function modifierMonProfil(ParticipantRepository $pr, $id): Response
+    public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
     {
+        $newParticipant = new Participant();
+        $formModif = $this->createForm(ParticipantModifType::class,$newParticipant);
+        $formModif -> handleRequest($request);
+        if($formModif->isSubmitted() && $formModif->isValid()){
+            $em->persist($newParticipant);
+            $em->flush();
+            return $this->redirectToRoute('app_logout');
+        }
         $infos = $pr->findBy(["id"=>$id]);
-        return $this->render('participant/infos.html.twig',compact('infos'));
+        return $this->renderForm('participant/infos.html.twig',compact('infos','formModif'));
     }
 
 }
