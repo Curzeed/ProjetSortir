@@ -34,6 +34,8 @@ class SortieType extends AbstractType
                 'expanded'=> true,])
             ->add('Lieu', EntityType::class,[
                 'class'=>Lieu::class,
+                'choice_label'=>'nom',
+                'expanded'=>true
             ])
         ;
     }
