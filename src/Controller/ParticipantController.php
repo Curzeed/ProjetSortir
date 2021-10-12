@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\ModifMotDePasseType;
 use App\Form\ParticipantModifType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,22 +29,49 @@ class ParticipantController extends AbstractController
      */
     public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
     {
-        //Instantiaton d'un nouveau participant
-        $newParticipant = new Participant();
+        //Récupere un objet Participant
+        $profilConnecte = $pr->findOneBy(["id" => $id]);
+        //lui dit que son profil est actif
+        $profilConnecte->setActif(true);
+        //lu idit que son password est son password
+        $profilConnecte->setPassword($profilConnecte->getPassword());
         //Création d'une variable pour recupérer les informations du formulaire lié à ce controller
-        $formModif = $this->createForm(ParticipantModifType::class,$newParticipant);
-        $formModif -> handleRequest($request);
+        $formModif = $this->createForm(ParticipantModifType::class, $profilConnecte);
         //Permet de modifier le formaulaire
-        if($formModif->isSubmitted() && $formModif->isValid()){
-            //Persist = récupère les infos
-            $em->persist($newParticipant);
-            //Flush = envoie les infos
+        $formModif->handleRequest($request);
+        //S'il est envoyé et valide alors....
+        if ($formModif->isSubmitted() && $formModif->isValid()) {
+            //....Persist = récupère les infos
+            $em->persist($profilConnecte);
+            //....Flush = envoie les infos
             $em->flush();
             // Une fois fait, faire un "redirectToRoute"afin de l'envoyer à une page "souhaité"
             return $this->redirectToRoute('app_logout');
         }
-        $infos = $pr->findBy(["id"=>$id]);
-        return $this->renderForm('participant/infos.html.twig',compact('infos','formModif'));
+        $infos = $pr->findBy(["id" => $id]);
+        return $this->renderForm('participant/infos.html.twig',
+            compact('infos', 'formModif'));
     }
+
+    /**
+     * @Route ("/modifierMotDePasse" , name="modifier_mot_de_passe")
+     */
+    public function modifierMotDePasse(EntityManagerInterface $em, Request $request, ParticipantRepository $pr): Response
+    {
+        $newMotDePasse = new Participant();
+        $formModifMotDePasse = $this->createForm(ModifMotDePasseType::class, $newMotDePasse);
+        $formModifMotDePasse->handleRequest($request);
+        if ($formModifMotDePasse->isSubmitted() && $formModifMotDePasse->isValid()) {
+            $em->persist($newMotDePasse);
+            $em->flush();
+            $infos = $pr->findBy(["password" => $newMotDePasse]);
+            return $this->redirectToRoute('participant',
+                compact('formModifMotDePasse'));
+        }
+        $infos = $pr->findBy(["password" => $newMotDePasse]);
+        return $this->redirectToRoute('participant',
+            compact('formModifMotDePasse'));
+    }
+
 
 }

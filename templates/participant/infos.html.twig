@@ -9,29 +9,28 @@
                         <label for="">Pseudo</label>
                         {{ form_widget(formModif.username, {'value' : app.user.userIdentifier}) }}
                     </div>
-                    <div>
+                    <div class="prenom">
                         <label for="">Prénom</label>
                         {{ form_widget(formModif.prenom, {'value' : app.user.prenom}) }}
                     </div>
-                    <div>
+                    <div class="nom">
                         <label for="">Nom</label>
                         {{ form_widget(formModif.nom, {'value' : app.user.nom}) }}
                     </div>
-                    <div>
+                    <div class="telephone">
                         <label for="">Téléphone</label>
                         {{ form_widget(formModif.telephone, {'value' : app.user.telephone}) }}
                     </div>
-                    <div>
+                    <div class="email">
                         <label for="">Email</label>
                         {{ form_widget(formModif.email, {'value' : app.user.email}) }}
                     </div>
-                    <div>
-                        <label for="">Modifier mon mot de passe</label>
-                        {{ form_widget(formModif.password, {'value' : app.user.password}) }}
-                    </div>
-                    <div>
+                    <div class="campus">
                         <label for="">Campus</label>
                         {{ form_widget(formModif.campus, {'value' : app.user.campus}) }}
+                    </div>
+                    <div>
+                        <a href="{{ path('modifier_mot_de_passe') }}">Modifier mon mot de passe</a>
                     </div>
                         <button> Enregistrer</button>
                         <button> Annuler</button>

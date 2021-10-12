@@ -15,7 +15,7 @@ class ParticipantModifType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password')
+            //->add('password',null,["mapped"=> false])
             ->add('nom')
             ->add('prenom')
             ->add('telephone')
