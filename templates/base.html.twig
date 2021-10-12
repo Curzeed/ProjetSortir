@@ -19,19 +19,40 @@
     </head>
     <body>
     {% block header %}
-        <div class="logo">
-            <a href="{{ path('liste_sorties') }}" class="logo"><img src="{{ asset('img/logo.png') }}" alt="logo du site">Sortir.com</a>
-        </div>
+
     <div class="nav">
-        <a href="#">Villes</a>&nbsp &nbsp
-        <a href="#">Campus</a>&nbsp &nbsp
-        {% if app.user %}
-        <a href={{ path('profil_participant' ,{'id' : app.user.id}) }}>Mon profil</a>&nbsp &nbsp
-            <a href="{{path('app_logout') }}">Se déconnecter</a>
-            <a href="{{ path('sortie_nouvelle',{'pseudo' : app.user.userIdentifier}) }}">Créer une sortie</a>
-        {% endif %}
-        <a href="{{ path('app_login') }}">Login</a>&nbsp &nbsp
-        <a href="{{path('app_register') }}">S'inscrire </a>&nbsp &nbsp
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="{{ path('liste_sorties') }}" class="navabar-brand">
+                            <img src="{{ asset('img/logo.png') }}" alt="logo" style="width: 40px;">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Villes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Campus</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if app.user %}
+                        <a class="nav-link" href="{{ path('profil_participant' ,{'id' : app.user.id}) }}">Mon Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('sortie_nouvelle',{'pseudo' : app.user.userIdentifier}) }}">Nouvelle sortie</a>
+                    </li>
+                        {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('app_login') }}">Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{path('app_register') }}">S'inscrire</a>
+                </ul>
+            </div>
+        </nav>
     </div>
     {% endblock %}
         {% block contenu %}{% endblock %}
