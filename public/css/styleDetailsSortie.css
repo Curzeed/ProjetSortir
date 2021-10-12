@@ -1,0 +1,20 @@
+.titre{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+div.detailsSortie{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+div.detailsSortie>div{
+    margin-top: 10px;
+}
+div.detailsSortie>div>label{
+    font-family: 'Roboto Slab', serif;
+    font-size: large;
+}
+div.detailsSortie>div>span{
+    font-family: 'Roboto Slab', serif;
+}

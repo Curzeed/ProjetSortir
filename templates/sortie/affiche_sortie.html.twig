@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleDetailsSortie.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+{% endblock %}
 {% block title %}Hello MainController!{% endblock %}
 
 {% block contenu %}
 
-    <div class="titre"><h1>Afficher une sortie</h1></div>
-
+    <div class="titre">
+        <h1>Afficher une sortie</h1>
+    </div>
         <div class="detailsSortie">
             <div class="nomSortie">
                 <label for="">Nom de la sortie :</label>
@@ -33,7 +39,7 @@
             </div>
             <div class="campus">
                 <label for="">Campus :</label>
-                {{ sortie.campus.nom }}
+               {{ sortie.campus.nom }}
             </div>
             <div class="lieu">
                 <label for="">Lieu :</label>
