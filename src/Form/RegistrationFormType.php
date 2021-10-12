@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
             ->add('campus', EntityType::class, [
                 'class'=>Campus::class,
                 'choice_label'=>"nom",
-                'expanded'=> true,
+                'expanded'=> true   ,
             ])
 
 

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu %}
+    {% for infosUser in infos %}
+        {{ infosUser.username }}
+    {% endfor %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

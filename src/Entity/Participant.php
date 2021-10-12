@@ -77,6 +77,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateurs")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $sorties_organisateur;
 

@@ -6,8 +6,9 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
             <link rel="icon" href="{{ asset('img/icons8-globe-terrestre-30.png') }}" type="image/x-icon/png">
+
         {% endblock %}
 
         {% block javascripts %}
@@ -22,10 +23,11 @@
             <a href="{{ path('main') }}" class="logo"><img src="{{ asset('img/logo.png') }}" alt="logo du site">Sortir.com</a>
         </div>
     <div class="nav">
-        <a href="#">Villes</a>
-        <a href="#">Campus</a>
-        <a href="#">Mon profil</a>
-        <a href="#">Se déconnecter</a>
+        <a href="#">Villes</a>&nbsp &nbsp
+        <a href="#">Campus</a>&nbsp &nbsp
+        <a href={{ path('profil_participant' ,{'id' : app.user.id}) }}>Mon profil</a>&nbsp &nbsp
+        <a href="{{path('app_logout') }}">Se déconnecter</a>
+        <a href="{{path('app_register') }}">s'enregistrer</a>
     </div>
     {% endblock %}
         {% block contenu %}{% endblock %}
