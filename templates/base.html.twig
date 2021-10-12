@@ -20,16 +20,18 @@
     <body>
     {% block header %}
         <div class="logo">
-            <a href="{{ path('main') }}" class="logo"><img src="{{ asset('img/logo.png') }}" alt="logo du site">Sortir.com</a>
+            <a href="{{ path('liste_sorties') }}" class="logo"><img src="{{ asset('img/logo.png') }}" alt="logo du site">Sortir.com</a>
         </div>
     <div class="nav">
         <a href="#">Villes</a>&nbsp &nbsp
         <a href="#">Campus</a>&nbsp &nbsp
         {% if app.user %}
         <a href={{ path('profil_participant' ,{'id' : app.user.id}) }}>Mon profil</a>&nbsp &nbsp
+            <a href="{{path('app_logout') }}">Se déconnecter</a>
+            <a href="{{ path('sortie_nouvelle') }}">Créer une sortie</a>
         {% endif %}
-        <a href="{{path('app_logout') }}">Se déconnecter</a>
-        <a href="{{path('app_register') }}">s'enregistrer</a>
+        <a href="{{ path('app_login') }}">Login</a>&nbsp &nbsp
+        <a href="{{path('app_register') }}">S'inscrire </a>&nbsp &nbsp
     </div>
     {% endblock %}
         {% block contenu %}{% endblock %}
