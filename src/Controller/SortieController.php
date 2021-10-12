@@ -58,4 +58,12 @@ class SortieController extends AbstractController
         }
         return $this->renderForm('sortie/nouvelle.html.twig', compact('formSortie'));
     }
+    /**
+     * @Route("/sorties/detail/{id}", name="sortie_details")
+     */
+    public function afficherSortie(SortieRepository $sr, $id) : Response{
+        $sortie = $sr->findOneBy(['id'=>$id]);
+        return $this->render('sortie/affiche_sortie.html.twig', compact('sortie'));
+
+    }
 }

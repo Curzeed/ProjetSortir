@@ -44,7 +44,7 @@
                         <td> {{ sortie.organisateur.nom }}</td>
                         </td>
                         <td>
-                            <a href="#">Afficher</a>
+                            <a href="{{ path('sortie_details',{'id' : sortie.id}) }}">Afficher</a>
 
                         {% if app.user.estInscrit %}
                             <a href="#">Se désister</a>
