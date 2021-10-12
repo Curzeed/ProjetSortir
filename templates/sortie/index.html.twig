@@ -34,15 +34,15 @@
                 <tr>
                     {% for sortie in listeSortie %}
                         <th scope="row"> {{ sortie.nom }}</th>
-                        <td> {{ sortie.dateHeureDebut }}</td>
-                        <td> {{ sortie.dateLimiteInscription }}</td>
-                        <td> {{ sortie.particpantsInscrits }}{{ sortie.nbInscriptionsMax }}</td>
-                        <td> {{ sortie.etat.nom }}</td>
+                        <td> {{ sortie.dateHeureDebut | date("m/d/Y") }}</td>
+                        <td> {{ sortie.dateLimiteInscription | date("m/d/Y")}}</td>
+                        <td> {{ sortie.participantsInscrits | length }} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td> {{ sortie.etat.libelle }}</td>
                         <td> {% if app.user.estInscrit  %}
-                                <img src="{{ asset('img/icons8-coche-48.png') }}" alt="icone coché">
+                                    <img src="{{ asset('img/icons8-coche-48.png') }}" alt="icone coché">
                             {% endif %}
+                        <td> {{ sortie.organisateur.nom }}</td>
                         </td>
-                        <td> </td>
                         <td>
                             <a href="#">Afficher</a>
 
@@ -53,8 +53,9 @@
                                 <a href="#">Modifier</a>
                             {% endif %}
                         </td>
-                    {% endfor %}
                 </tr>
+                    {% endfor %}
+
                 </tbody>
             </table>
         </div>

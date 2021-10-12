@@ -2,9 +2,10 @@
 
 {% block contenu %}
 {{ form_start(formSortie) }}
-    <button>Envoyer</button>
-    {{ form_widget(formSortie) }}
 
+    {{ form_widget(formSortie) }}
+    <button>Envoyer</button>
+    {{ form_end(formSortie) }}
 {% endblock %}
 
 {% block title %}

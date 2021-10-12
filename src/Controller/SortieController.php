@@ -19,6 +19,7 @@ class SortieController extends AbstractController
     #[Route('/sorties', name: 'liste_sorties')]
     public function index(SortieRepository $sr, CampusRepository $cr): Response
     {
+
         $listeCampus = $cr->findAll();
         $listeSortie = $sr->findAll();
         return $this->render('sortie/index.html.twig', compact('listeSortie', 'listeCampus'));
@@ -29,8 +30,7 @@ class SortieController extends AbstractController
      */
     public function listeSortieFilter(SortieRepository $sr) : Response{
 
-        $listeSortie = $sr->findWithCampus();
-        return $this->render('sortie/index.html.twig',compact('listeSortie'));
+        return $this->render('sortie/index.html.twig');
     }
 
     /**
@@ -41,8 +41,11 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $test = $pr->findOneBy(["username"=>$pseudo]);
         $sortie->setOrganisateur($test);
+        $sortie->setCampus($test->getCampus());
         $formSortie = $this->createForm(SortieType::class, $sortie);
+
         $formSortie->handleRequest($request);
+
         if($formSortie->isSubmitted() && $formSortie->isValid()){
             $entityManager->persist($sortie);
             $entityManager->flush();
