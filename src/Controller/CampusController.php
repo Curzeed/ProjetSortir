@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class CampusController extends AbstractController
     }
 
     #[Route('/new', name: 'campus_new', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request): Response
     {
         $campus = new Campus();
@@ -43,6 +45,7 @@ class CampusController extends AbstractController
     }
 
     #[Route('/{id}', name: 'campus_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Campus $campus): Response
     {
         return $this->render('campus/show.html.twig', [
@@ -51,6 +54,7 @@ class CampusController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'campus_edit', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Campus $campus): Response
     {
         $form = $this->createForm(CampusType::class, $campus);
@@ -69,6 +73,7 @@ class CampusController extends AbstractController
     }
 
     #[Route('/{id}', name: 'campus_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Campus $campus): Response
     {
         if ($this->isCsrfTokenValid('delete'.$campus->getId(), $request->request->get('_token'))) {

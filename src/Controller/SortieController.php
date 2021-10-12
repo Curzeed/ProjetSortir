@@ -9,6 +9,7 @@ use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/sorties', name: 'liste_sorties')]
+    #[IsGranted('ROLE_USER')]
     public function index(SortieRepository $sr, CampusRepository $cr): Response
     {
 
@@ -26,7 +28,9 @@ class SortieController extends AbstractController
     }
 
     /**
+     *
      * @Route ("/sorties/filter", name="liste_sorties_filtree")
+     * @IsGranted("ROLE_USER")
      */
     public function listeSortieFilter(SortieRepository $sr) : Response{
 
@@ -35,6 +39,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route ("/sorties/nouvelle/{pseudo}", name="sortie_nouvelle")
+     * @IsGranted("ROLE_USER")
      */
     public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, $pseudo, ParticipantRepository $pr)
     {

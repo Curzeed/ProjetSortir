@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\ParticipantModifType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route ("/monProfil/{id}" , name="profil_participant")
      */
     public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
@@ -45,7 +47,3 @@ class ParticipantController extends AbstractController
     }
 
 }
-
-/**
-//$devSession  = $dr->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
-*/
