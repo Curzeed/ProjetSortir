@@ -26,13 +26,18 @@ class ParticipantController extends AbstractController
      */
     public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
     {
-        //instantiaton
+        //Instantiaton d'un nouveau participant
         $newParticipant = new Participant();
+        //Création d'une variable pour recupérer les informations du formulaire lié à ce controller
         $formModif = $this->createForm(ParticipantModifType::class,$newParticipant);
         $formModif -> handleRequest($request);
+        //Permet de modifier le formaulaire
         if($formModif->isSubmitted() && $formModif->isValid()){
+            //Persist = récupère les infos
             $em->persist($newParticipant);
+            //Flush = envoie les infos
             $em->flush();
+            // Une fois fait, faire un "redirectToRoute"afin de l'envoyer à une page "souhaité"
             return $this->redirectToRoute('app_logout');
         }
         $infos = $pr->findBy(["id"=>$id]);

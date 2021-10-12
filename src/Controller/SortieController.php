@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,11 +34,13 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route ("/sorties/nouvelle", name="sortie_nouvelle")
+     * @Route ("/sorties/nouvelle/{pseudo}", name="sortie_nouvelle")
      */
-    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager)
+    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, $pseudo, ParticipantRepository $pr)
     {
         $sortie = new Sortie();
+        $test = $pr->findOneBy(["username"=>$pseudo]);
+        $sortie->setOrganisateur($test);
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
         if($formSortie->isSubmitted() && $formSortie->isValid()){
