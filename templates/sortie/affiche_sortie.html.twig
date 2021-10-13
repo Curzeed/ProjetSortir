@@ -63,6 +63,7 @@
             </div>
 
         </div>
+    <h1>Liste des Participants inscrits :</h1>
     <div class="listeInscrits">
         <table class="table table-striped">
             <thead>
@@ -72,13 +73,14 @@
                 </tr>
             </thead>
             <tbody>
+            {% for p in sortie.participantsInscrits %}
                 <tr>
-                    <td> d </td>
-                    <td> d </td>
-                {#  {% for personne in listePersonne %}
 
-                                    {% endfor %}#}
+                    <td>  {{ p.username }}</td>
+                    <td>  {{ p.nom }} {{ p.prenom }}</td>
+
                 </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

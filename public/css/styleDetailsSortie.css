@@ -19,3 +19,6 @@ div.detailsSortie>div>label{
 div.detailsSortie>div>span{
     font-family: 'Roboto Slab', serif;
 }
+table{
+    flex:auto;
+}
