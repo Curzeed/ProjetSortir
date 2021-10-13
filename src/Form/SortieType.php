@@ -27,12 +27,14 @@ class SortieType extends AbstractType
             ->add('Etat', EntityType::class,[
                 'class'=>Etat::class,
                 'choice_label'=>'libelle',
-                'expanded'=>true,
+                'mapped'=>false,
+                'multiple'=>false
             ])
             ->add('campus' , EntityType::class, [
                 'class'=>Campus::class,
                 'choice_label'=>"nom",
-                'expanded'=> true,])
+                'mapped'=> false,
+                'multiple'=> false])
         ;
     }
 
