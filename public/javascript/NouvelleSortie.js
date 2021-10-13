@@ -1,5 +1,4 @@
 function afficherVille(tableau){
-    console.log(tableau);
     let bodyListe = document.querySelector('#maListeVille');
     let template = document.querySelector('#selecttemplate');
     for (let v of tableau){
@@ -18,8 +17,7 @@ let lieux =  [];
 let url2 = 'http://localhost:8000/api_lieu'
 fetch(url2).then(response => response.json())
     .then(tab =>
-    {lieux = tab;
-    console.log(lieux);    });
+    {lieux = tab;});
 
 
 function changeLieu(){

@@ -71,4 +71,22 @@ class SortieController extends AbstractController
 
     }
 
+    /**
+     * @Route ("/api/sortie", name="api_sorties")
+     */
+    public function apiSorties(SortieRepository $sr){
+        $liste = $sr->findAll();
+        $tab = [];
+        foreach ($liste as $sortie){
+            $info['nom'] = $sortie->getNom();
+            $info['dateHeureDebut'] = $sortie->getDateHeureDebut();
+            $info['duree'] = $sortie->getDuree();
+            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription();
+            $info['nbInscriptionsMax'] = $sortie->getNbInscriptionsMax();
+            $info['infosSortie'] = $sortie->getInfosSortie();
+            $info['etat'] = $sortie->getEtat()->getId();
+            $tab []= $info;
+        }
+        return $this->json($tab);
+    }
 }
