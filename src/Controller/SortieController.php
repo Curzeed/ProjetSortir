@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
+use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,7 +42,7 @@ class SortieController extends AbstractController
      * @Route ("/sorties/nouvelle/{pseudo}", name="sortie_nouvelle")
      * @IsGranted("ROLE_USER")
      */
-    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, $pseudo, ParticipantRepository $pr)
+    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, $pseudo, ParticipantRepository $pr, LieuRepository $lr)
     {
         $sortie = new Sortie();
         $test = $pr->findOneBy(["username"=>$pseudo]);
@@ -52,6 +53,9 @@ class SortieController extends AbstractController
         $formSortie->handleRequest($request);
 
         if($formSortie->isSubmitted() && $formSortie->isValid()){
+            $lieuId = $request->get('lieu');
+            $lieu = $lr->find($lieuId);
+            $sortie->setLieu($lieu);
             $entityManager->persist($sortie);
             $entityManager->flush();
             return $this->redirectToRoute('liste_sorties');

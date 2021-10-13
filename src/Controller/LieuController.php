@@ -20,7 +20,17 @@ class LieuController extends AbstractController
      * @Route ("/api_lieu", name="api_lieu")
      */
     public function apiLieu(LieuRepository $lr){
-        $liste = $lr->findAvecVille();
-        return $this->json($liste);
+        $liste = $lr->findAll();
+        $tab = [];
+        foreach ($liste as $lieu){
+            $info['nom'] = $lieu->getNom();
+            $info['id'] = $lieu->getId();
+            $info['ville'] = $lieu->getVille()->getId();
+            $info['rue'] = $lieu->getRue();
+            $info['longitude'] = $lieu->getLongitude();
+            $info['latitude'] = $lieu->getLatitude();
+            $tab[]= $info;
+        }
+        return $this->json($tab);
     }
 }

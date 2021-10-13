@@ -7,8 +7,12 @@
 
     {{ form_widget(formSortie) }}
     <label for="">Villes</label>
-    <select name="ville" id="maListeVille" onchange="afficherLieu()">
+    <select name="ville" id="maListeVille" onchange="changeLieu()">
         <option value="#"> Séléctionnez une ville </option>
+
+    </select><br>
+    <select name="lieu" id="maListeLieu">
+        <option value="#"> Séléctionnez un lieu </option>
 
     </select><br>
     <button>Envoyer</button>
