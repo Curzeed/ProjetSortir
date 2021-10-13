@@ -29,7 +29,6 @@ class SortieController extends AbstractController
     }
 
     /**
-     *
      * @Route ("/sorties/filter", name="liste_sorties_filtree")
      * @IsGranted("ROLE_USER")
      */
@@ -69,6 +68,17 @@ class SortieController extends AbstractController
         $sortie = $sr->findOneBy(['id'=>$id]);
         return $this->render('sortie/affiche_sortie.html.twig', compact('sortie'));
 
+    }
+    /**
+     * @Route("/sorties/inscription/{id}", name="sortie_inscription")
+     */
+    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em): Response{
+
+        $user = $this->getUser();
+        $sortie->addParticipantsInscrit($user);
+        $em->flush();
+
+        return $this->redirectToRoute('liste_sorties');
     }
 
 }
