@@ -80,5 +80,13 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('liste_sorties');
     }
-
+    /**
+     * @Route("/sorties/desister/{id}", name="sortie_desistement")
+     */
+    public function removeInscription(Sortie $sortie, EntityManagerInterface $em): Response{
+        $user = $this->getUser();
+        $sortie->removeParticipantsInscrit($user);
+        $em->flush();
+        return $this->redirectToRoute('liste_sorties');
+    }
 }
