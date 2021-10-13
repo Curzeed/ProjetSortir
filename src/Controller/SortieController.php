@@ -66,4 +66,5 @@ class SortieController extends AbstractController
         return $this->render('sortie/affiche_sortie.html.twig', compact('sortie'));
 
     }
+
 }

@@ -7,6 +7,7 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,11 +33,6 @@ class SortieType extends AbstractType
                 'class'=>Campus::class,
                 'choice_label'=>"nom",
                 'expanded'=> true,])
-            ->add('Lieu', EntityType::class,[
-                'class'=>Lieu::class,
-                'choice_label'=>'nom',
-                'expanded'=>true
-            ])
         ;
     }
 
