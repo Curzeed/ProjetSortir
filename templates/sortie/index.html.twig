@@ -33,7 +33,7 @@
                 <tbody>
                 <tr>
                     {% for sortie in listeSortie %}
-                        <th scope="row"> {{ sortie.nom }}</th>
+                        <td> {{ sortie.nom }}</td>
                         <td> {{ sortie.dateHeureDebut | date("m/d/Y") }}</td>
                         <td> {{ sortie.dateLimiteInscription | date("m/d/Y")}}</td>
                         <td> {{ sortie.participantsInscrits | length }} / {{ sortie.nbInscriptionsMax }}</td>
