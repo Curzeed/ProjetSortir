@@ -10,6 +10,7 @@ function afficherSortie(tableau){
     let urlModif = 'http://localhost:8000/sorties/detail/';
     let urlDesister = 'http://localhost:8000/sorties/desister/';
     let urlInscription = 'http://localhost:8000/sorties/inscription/';
+
     for (let s of tableau){
         let urlInscription2 = urlInscription+s.id;
         let urlDesister2 = urlDesister+s.id;
@@ -24,10 +25,10 @@ function afficherSortie(tableau){
         tabTd[4].innerHTML = s.etat;
         tabTd[6].innerHTML = s.organisateur;
         tabTd[9].querySelector('a').setAttribute('href',urlModif2);
-        if (s.userInscrit == false){
+        if (s.userInscrit === false){
             tabTd[5].querySelector('i').setAttribute('hidden', '');
 
-        }if(s.userInscrit == true){
+        }if(s.userInscrit === true){
             tabTd[10].querySelector('a').setAttribute('hidden','');
         }
         tabTd[10].querySelector('a').setAttribute('href',urlInscription2)
@@ -52,6 +53,7 @@ function afficherCampus(campus){
 
     let body = document.querySelector('#listeCampus');
 
+    console.log(campus);
     for(let c of campus){
 
         //let clone = template.cloneNode(true);

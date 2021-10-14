@@ -81,6 +81,7 @@ class SortieController extends AbstractController
 
         $user = $this->getUser();
         $sortie->addParticipantsInscrit($user);
+        $em->persist($sortie);
         $em->flush();
 
         return $this->redirectToRoute('liste_sorties');
@@ -104,7 +105,7 @@ class SortieController extends AbstractController
         foreach ($liste as $sortie){
             $sortie = $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
-            $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser());
+            $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
             $info['dateHeureDebut'] = $sortie->getDateHeureDebut();
             $info['duree'] = $sortie->getDuree();
@@ -116,17 +117,12 @@ class SortieController extends AbstractController
             $info['id'] = $sortie->getId();
             $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
             $info['siteOrga'] = $sortie->getCampus()->getNom();
-            $info['userInscrit'] = $userParticipant;;
+            $info['userInscrit'] = $userParticipant;
 
             $tab []= $info;
 
         }
         return $this->json($tab);
     }
-    /**
-     * @Route ("/api/sorties/sorted", name="api_sorties_sorted")
-     */
-    public function apiSortiesSorted(){
 
-    }
 }
