@@ -88,12 +88,5 @@ class CampusController extends AbstractController
         }
         return $this->json($tab);
     }
-    #[Route('/{id}', name: 'campus_show', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function show(Campus $campus): Response
-    {
-        return $this->render('campus/show.html.twig', [
-            'campus' => $campus,
-        ]);
-    }
+
 }
