@@ -5,6 +5,7 @@ namespace App\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -35,7 +36,6 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         $username = $request->request->get('username', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
-
         return new Passport(
             new UserBadge($username),
             new PasswordCredentials($request->request->get('password', '')),

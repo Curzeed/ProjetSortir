@@ -8,15 +8,12 @@
         <h3> Filtrer les sorties</h3>
     </div>
 
-    <div class="listeCampus">
+    <div>
         <select id="listeCampus">
-        {% for campus in listeCampus %}
-            <option value="{{ campus.id }}">{{ campus.nom }}</option>
-        {% endfor %}
+            <option value="#">Séléctionnez une ville : </option>
         </select>
     </div>
-    <script src="{{ asset('javascript/filtreSorties.js') }}">
-    </script>
+
     <div class="container">
         <div class="row">
 
@@ -47,7 +44,7 @@
             <td>2</td>
             <td>3</td>
             <td>4</td>
-            <td><img alt="icone coché"></td>
+            <td><i class="fas fa-check" ></i></td>
             <td>6</td>
 
             <!-- 7-->
@@ -56,11 +53,15 @@
             </td>
             <!-- 8-->
             <td>
-                <a href="#">Modifier</a>
+                <a href="#" >Modifier</a>
             </td>
             <!-- 9-->
             <td>
                 <a href="#">Afficher</a>
+            </td>
+            <!-- 10 -->
+            <td>
+                <a href="#">S'inscrire</a>
             </td>
         </tr>
     </template>
@@ -68,4 +69,6 @@
     <template id="templateCampus">
         <option></option>
     </template>
+    <script src="{{ asset('javascript/filtreSorties.js') }}">
+    </script>
 {% endblock %}

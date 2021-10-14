@@ -4,16 +4,15 @@ let urlCampus = 'http://localhost:8000/campus/api';
 
 fetch(url).then(response => response.json())
 .then(tableau => afficherSortie(tableau));
-
-fetch(url2).then(response => response.json())
-    .then(tableau => afficherCampus(tableau));
-
 function afficherSortie(tableau){
     let body = document.querySelector('#myTbody');
     let template = document.querySelector('#ligne');
-    let urlImage = "{{ asset('img/icons8-coche-48.png') }}" ;
     let urlModif = 'http://localhost:8000/sorties/detail/';
+    let urlDesister = 'http://localhost:8000/sorties/desister/';
+    let urlInscription = 'http://localhost:8000/sorties/inscription/';
     for (let s of tableau){
+        let urlInscription2 = urlInscription+s.id;
+        let urlDesister2 = urlDesister+s.id;
         let urlModif2 = urlModif+s.id;
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
@@ -26,18 +25,35 @@ function afficherSortie(tableau){
         tabTd[6].innerHTML = s.organisateur;
         tabTd[9].querySelector('a').setAttribute('href',urlModif2);
         if (s.userInscrit == false){
-            tabTd[5].querySelector('img').setAttribute('hidden', '');
+            tabTd[5].querySelector('i').setAttribute('hidden', '');
+
+        }if(s.userInscrit == true){
+            tabTd[10].querySelector('a').setAttribute('hidden','');
         }
+        tabTd[10].querySelector('a').setAttribute('href',urlInscription2)
+        tabTd[7].querySelector('a').setAttribute('href', urlDesister2)
         body.appendChild(clone);
     }
 }
-function afficherCampus(tableau){
-    let template = document.querySelector('#templateCampus');
-    let body = document.querySelector('#listeCampus')
-    for(let c of tableau){
-        let clone = template.cloneNode(true);
-        let option = clone.querySelectorAll('option');
+fetch(urlCampus).then(response => response.json())
+    .then(campus =>{
+        afficherCampus(campus);
+    });
 
-        option
+function afficherCampus(campus){
+//console.log(campus);
+    let template = document.querySelector('#templateCampus');
+
+    let body = document.querySelector('#listeCampus');
+
+    for(let c of campus){
+
+        //let clone = template.cloneNode(true);
+
+        let clone = template.content.cloneNode(true);
+        let option = clone.querySelector('option');
+        option.innerHTML = c.nom;
+        option.setAttribute('value',c.id);
+        body.appendChild(clone);
     }
 }

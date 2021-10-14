@@ -115,7 +115,14 @@ class SortieController extends AbstractController
             $info['siteOrga'] = $sortie->getCampus()->getNom();
             $info['userInscrit'] = $userParticipant;
             $tab []= $info;
+
         }
         return $this->json($tab);
+    }
+    /**
+     * @Route ("/api/sorties/sorted", name="api_sorties_sorted")
+     */
+    public function apiSortiesSorted(){
+
     }
 }
