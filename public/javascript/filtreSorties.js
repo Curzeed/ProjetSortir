@@ -32,6 +32,12 @@ function afficherSortie(tableau){
         }
         tabTd[10].querySelector('a').setAttribute('href',urlInscription2)
         tabTd[7].querySelector('a').setAttribute('href', urlDesister2)
+        let nouvelledate = new Date(s.dateLimiteInscription.substr(0,9));
+        console.log(nouvelledate)
+
+        if(s.etat === 'passée' || isValidDate(nouvelledate) === false){
+            tabTd[10].querySelector('a').setAttribute('hidden', '') ;
+        }
         body.appendChild(clone);
     }
 }
@@ -56,4 +62,7 @@ function afficherCampus(campus){
         option.setAttribute('value',c.id);
         body.appendChild(clone);
     }
+}
+function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
 }

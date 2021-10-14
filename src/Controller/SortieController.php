@@ -9,6 +9,7 @@ use App\Repository\CampusRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Cassandra\Date;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Services;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SortieController extends AbstractController
 {
@@ -100,6 +102,7 @@ class SortieController extends AbstractController
         $tab = [];
 
         foreach ($liste as $sortie){
+            $sortie = $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
@@ -113,7 +116,8 @@ class SortieController extends AbstractController
             $info['id'] = $sortie->getId();
             $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
             $info['siteOrga'] = $sortie->getCampus()->getNom();
-            $info['userInscrit'] = $userParticipant;
+            $info['userInscrit'] = $userParticipant;;
+
             $tab []= $info;
 
         }

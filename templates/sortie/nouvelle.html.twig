@@ -1,27 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
     <script src="{{ asset('javascript/NouvelleSortie.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/styleNouvelleSortie.css') }}">
 {% endblock %}
 {% block contenu %}
-{{ form_start(formSortie) }}
+    <div class="formulaire">
+        {{ form_start(formSortie) }}
 
-    {{ form_widget(formSortie) }}
-    <label for="">Villes : </label>
-    <select name="ville" id="maListeVille" onchange="changeLieu()">
-        <option value="#"> Séléctionnez une ville </option>
+            {{ form_widget(formSortie) }}
+            <label for="">Villes : </label>
+            <select name="ville" id="maListeVille" onchange="changeLieu()">
+                <option value="#"> Séléctionnez une ville </option>
 
-    </select><br>
-    <label for="">Lieux : </label>
-    <select name="lieu" id="maListeLieu">
-        <option value="#"> Séléctionnez un lieu </option>
+            </select><br>
+            <label for="">Lieux : </label>
+            <select name="lieu" id="maListeLieu">
+                <option value="#"> Séléctionnez un lieu </option>
 
-    </select><br>
-    <button>Envoyer</button>
-    {{ form_end(formSortie) }}
+            </select><br>
+            <button>Envoyer</button>
+            {{ form_end(formSortie) }}
 
-    <template id="selecttemplate">
-        <option></option>
-    </template>
+            <template id="selecttemplate">
+                <option></option>
+            </template>
+    </div>
 {% endblock %}
 
 {% block title %}
