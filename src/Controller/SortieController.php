@@ -43,15 +43,15 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route ("/sorties/nouvelle/{pseudo}", name="sortie_nouvelle")
+     * @Route ("/sorties/nouvelle/", name="sortie_nouvelle")
      * @IsGranted("ROLE_USER")
      */
-    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, $pseudo, ParticipantRepository $pr, LieuRepository $lr)
+    public function ajouterSortie(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $pr, LieuRepository $lr)
     {
         $sortie = new Sortie();
-        $test = $pr->findOneBy(["username"=>$pseudo]);
-        $sortie->setOrganisateur($test);
-        $sortie->setCampus($test->getCampus());
+        $user = $this->getUser();
+        $sortie->setOrganisateur($user);
+        $sortie->setCampus($user->getCampus());
         $formSortie = $this->createForm(SortieType::class, $sortie);
 
         $formSortie->handleRequest($request);
@@ -104,7 +104,7 @@ class SortieController extends AbstractController
         foreach ($liste as $sortie){
             $sortie = $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
-            $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
+            $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser());
             $info['nom'] = $sortie->getNom();
             $info['dateHeureDebut'] = $sortie->getDateHeureDebut();
             $info['duree'] = $sortie->getDuree();
