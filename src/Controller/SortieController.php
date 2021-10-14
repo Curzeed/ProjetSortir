@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\Services;
 
 class SortieController extends AbstractController
 {
@@ -93,17 +94,25 @@ class SortieController extends AbstractController
     /**
      * @Route ("/api/sortie", name="api_sorties")
      */
-    public function apiSorties(SortieRepository $sr){
+    public function apiSorties(SortieRepository $sr, Services $s){
         $liste = $sr->findAll();
         $tab = [];
+
         foreach ($liste as $sortie){
+            $userParticipant = false;
+            $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
             $info['dateHeureDebut'] = $sortie->getDateHeureDebut();
             $info['duree'] = $sortie->getDuree();
             $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription();
             $info['nbInscriptionsMax'] = $sortie->getNbInscriptionsMax();
             $info['infosSortie'] = $sortie->getInfosSortie();
-            $info['etat'] = $sortie->getEtat()->getId();
+            $info['etat'] = $sortie->getEtat()->getLibelle();
+            $info['organisateur'] = $sortie->getOrganisateur()->getNom();
+            $info['id'] = $sortie->getId();
+            $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
+            $info['siteOrga'] = $sortie->getCampus()->getNom();
+            $info['userInscrit'] = $userParticipant;
             $tab []= $info;
         }
         return $this->json($tab);

@@ -9,61 +9,63 @@
     </div>
 
     <div class="listeCampus">
-        <select>
+        <select id="listeCampus">
         {% for campus in listeCampus %}
             <option value="{{ campus.id }}">{{ campus.nom }}</option>
         {% endfor %}
         </select>
     </div>
-    <div class="listeSortie">
-        <div class="sortie">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrits/places</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    {% for sortie in listeSortie %}
-                        <td> {{ sortie.nom }}</td>
-                        <td> {{ sortie.dateHeureDebut | date("m/d/Y") }}</td>
-                        <td> {{ sortie.dateLimiteInscription | date("m/d/Y")}}</td>
-                        <td> {{ sortie.participantsInscrits | length }} / {{ sortie.nbInscriptionsMax }}</td>
-                        <td> {{ sortie.etat.libelle }}</td>
-                        <td> {% if app.user.estInscrit  %}
-                                    <img src="{{ asset('img/icons8-coche-48.png') }}" alt="icone coché">
-                            {% endif %}
-                        <td> {{ sortie.organisateur.nom }}</td>
-                        </td>
-                        <td>
-                            {% if app.user.estInscrit  %}
-                            <a href="{{ path('sortie_inscription',{"id": sortie.id}) }}">S'inscrire</a>
-                            {% endif %}
-                            <a href="{{ path('sortie_details',{'id' : sortie.id}) }}">Afficher</a>
+    <script src="{{ asset('javascript/filtreSorties.js') }}">
+    </script>
+    <div class="container">
+        <div class="row">
 
-                        {% if app.user.estInscrit %}
-                            <a href="{{ path('sortie_desistement',{'id' : sortie.id}) }}">Se désister</a>
-                        {% endif %}
-                            {% if sortie.organisateur == app.user %}
-                                <a href="#">Modifier</a>
-                            {% endif %}
-                        </td>
-                </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="offset-1 col-10">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom de la sortie</th>
+                        <th scope="col">Date de la sortie</th>
+                        <th scope="col">Clôture</th>
+                        <th scope="col">Inscrits/places</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Inscrit</th>
+                        <th scope="col">Organisateur</th>
+                        <th scope="col" colspan="2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myTbody">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    <template id="ligne">
+        <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td><img alt="icone coché"></td>
+            <td>6</td>
+
+            <!-- 7-->
+             <td>
+                <a href="#" class="btn btn-primary">Se désister</a>
+            </td>
+            <!-- 8-->
+            <td>
+                <a href="#">Modifier</a>
+            </td>
+            <!-- 9-->
+            <td>
+                <a href="#">Afficher</a>
+            </td>
+        </tr>
+    </template>
 </div>
-
-
-
+    <template id="templateCampus">
+        <option></option>
+    </template>
 {% endblock %}

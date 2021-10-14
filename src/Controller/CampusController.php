@@ -44,15 +44,6 @@ class CampusController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'campus_show', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function show(Campus $campus): Response
-    {
-        return $this->render('campus/show.html.twig', [
-            'campus' => $campus,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'campus_edit', methods: ['GET','POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Campus $campus): Response
@@ -83,5 +74,26 @@ class CampusController extends AbstractController
         }
 
         return $this->redirectToRoute('campus_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route ("/api", name="api_campus")
+     */
+    public function apiCampus(CampusRepository $cr){
+        $tab = [];
+        $liste = $cr->findAll();
+        foreach ($liste as $campus){
+            $info['id'] = $campus->getId();
+            $info['nom']= $campus->getNom();
+            $tab[] = $info;
+        }
+        return $this->json($tab);
+    }
+    #[Route('/{id}', name: 'campus_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function show(Campus $campus): Response
+    {
+        return $this->render('campus/show.html.twig', [
+            'campus' => $campus,
+        ]);
     }
 }
