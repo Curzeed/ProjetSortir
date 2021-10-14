@@ -26,6 +26,7 @@ class SortieController extends AbstractController
 
         $listeCampus = $cr->findAll();
         $listeSortie = $sr->findAll();
+        //dd($listeSortie);
         return $this->render('sortie/index.html.twig', compact('listeSortie', 'listeCampus'));
     }
 
