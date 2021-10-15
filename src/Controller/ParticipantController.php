@@ -49,19 +49,17 @@ class ParticipantController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
-                // Move the file to the directory where brochures are stored
+
                 try {
                     $image->move(
                         $this->getParameter('image_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $profilConnecte->setImage($newFilename);
+                }
+                $photoProfil = "profil/".$newFilename;
+                $profilConnecte->setImage($photoProfil);
             }
 
 

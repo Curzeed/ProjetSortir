@@ -6,3 +6,6 @@
 form > div{
     margin-top: 2%;
 }
+.image {
+    width: 200px !important;
+}
