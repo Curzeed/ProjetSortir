@@ -65,11 +65,11 @@ class ParticipantController extends AbstractController
             $em->persist($newMotDePasse);
             $em->flush();
             $infos = $pr->findBy(["password" => $newMotDePasse]);
-            return $this->redirectToRoute('participant',
+            return $this->render('participant/modifierMotDePasse.html.twig',
                 compact('formModifMotDePasse'));
         }
         $infos = $pr->findBy(["password" => $newMotDePasse]);
-        return $this->redirectToRoute('participant',
+        return $this->render('participant/modifierMotDePasse.html.twig',
             compact('formModifMotDePasse'));
     }
 

@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}    <h1>babbababa</h1>
+{% endblock %}
+
 {% block contenu%}
     {% for infosUser in infos %}
         {{ infosUser.username }}
@@ -13,7 +16,7 @@
     {{ form_end(formModifMotDePasse) }}
 {% endblock %}
 
-{% block contenu %}
+{% block body %}
 
 {% endblock %}
 

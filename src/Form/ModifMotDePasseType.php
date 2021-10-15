@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,11 +15,23 @@ class ModifMotDePasseType extends AbstractType
     {
         $builder
 
-            ->add('password',PasswordType::class,[
-                'attr' => ['autocomplete' => 'password']])
+            ->add('oldPassword', PasswordType::class)
+            ->add('Password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+                'invalid_message' => 'Les deux mots de passe doivent être identiques',
+                'options' => array(
+                    'attr' => array(
+                        'class' => 'password-field'
+                    )
+                ),
+                'required' => true,
+            ))
 
         ;
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
