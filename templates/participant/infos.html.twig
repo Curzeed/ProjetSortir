@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleDetailUtilisateur.css') }}">
+{% endblock %}
 {% block contenu %}
-    {% for infosUser in infos %}
-        {{ infosUser.username }}
-    {% endfor %}
+    <div class="formulaire">
+
     {{ form_start(formModif) }}
                     <div class="username">
                         <label for="">Pseudo</label>
@@ -32,9 +33,11 @@
                     <div>
                         <a href="{{ path('modifier_mot_de_passe') }}">Modifier mon mot de passe</a>
                     </div>
-                        <button> Enregistrer</button>
-                        <button> Annuler</button>
+                        <button class="btn btn-secondary"> Enregistrer</button>
+                        <button class="btn btn-secondary"> Annuler</button>
                         {{ form_end(formModif) }}
+
+    </div>
 {% endblock %}
 
 {% block title %}

@@ -22,3 +22,7 @@ div.detailsSortie>div>span{
 table{
     flex:auto;
 }
+.listeInscrits{
+    height: 20%;
+    width: 30%;
+}

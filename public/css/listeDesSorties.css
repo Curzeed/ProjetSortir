@@ -1,0 +1,47 @@
+*{
+    box-sizing: content-box !important;
+}
+table{
+    width: 100% !important;
+}
+
+tr{
+    width: 100px;
+}
+.btn-secondary{
+    background-color: #8064A2 !important;
+    width:90px;
+    line-height:30px;
+}
+#btnDesist{
+    size: 20px;
+}
+.btn-secondary:hover{
+    background-color : #671fcb !important;
+    transition-duration: 2s;
+    transition-delay: 1s;
+    transform: scale(1.1);
+
+}
+.table>tbody{
+    vertical-align: unset !important;
+}
+.table>thead {
+    vertical-align: unset !important;
+}
+.flash-success{
+    margin-left: 40%;
+    text-align: center;
+    background: rgba(69, 183, 3, 0.87);
+    width: 300px;
+    border-radius: 10px;
+    border: solid rgba(69, 183, 3, 0.87);
+}
+.flash-notice{
+    margin-left: 40%;
+    text-align: center;
+    background: rgba(255, 0, 0, 0.87);
+    width: 300px;
+    border-radius: 10px;
+    border: solid rgba(255, 0, 0, 0.87);
+}

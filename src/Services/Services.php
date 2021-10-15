@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Etat;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;

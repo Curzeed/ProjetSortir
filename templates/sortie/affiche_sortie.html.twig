@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
 {% endblock %}
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}{{ sortie.nom}}{% endblock %}
 
 {% block contenu %}
 
@@ -63,7 +63,7 @@
             </div>
 
         </div>
-    <h1>Liste des Participants inscrits :</h1>
+    <h5>Liste des Participants inscrits :</h5>
     <div class="listeInscrits">
         <table class="table table-striped">
             <thead>
