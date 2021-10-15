@@ -1,24 +1,28 @@
 let url = 'http://localhost:8000/api/sortie';
 let urlCampus = 'http://localhost:8000/campus/api';
+let tab = [];
+
 const dateActuelle= new Date(Date.now());
 
 
 fetch(url).then(response => response.json())
-.then(tableau => afficherSortie(tableau));
+.then(tableau => {
+    afficherSortie(tableau);
+    tab = tableau;
+});
 function afficherSortie(tableau){
     let body = document.querySelector('#myTbody');
     let template = document.querySelector('#ligne');
     let urlModif = 'http://localhost:8000/sorties/detail/';
     let urlDesister = 'http://localhost:8000/sorties/desister/';
     let urlInscription = 'http://localhost:8000/sorties/inscription/';
-
+    body.innerHTML = '';
     for (let s of tableau){
         let urlInscription2 = urlInscription+s.id;
         let urlDesister2 = urlDesister+s.id;
         let urlModif2 = urlModif+s.id;
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
-        console.log(dateActuelle.getUTCDate())
         tabTd[0].innerHTML = s.nom;
         tabTd[1].innerHTML = s.dateHeureDebut;
         tabTd[2].innerHTML = s.dateLimiteInscription;
@@ -65,4 +69,19 @@ function afficherCampus(campus){
 }
 function isValidDate(d) {
     return d instanceof Date && !isNaN(d);
+}
+
+function filtre(){
+    let nom = document.querySelector('#sortie').value;
+    let campus = document.querySelector('#listeCampus').value
+
+    let tab2 = [];
+        for (let s of tab) {
+            // Vérifier que la sortie contient un nom
+            if (s.nom.indexOf(nom) != -1) {
+                tab2.push(s);
+            }
+        }
+
+    afficherSortie(tab2);
 }

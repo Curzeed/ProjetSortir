@@ -78,7 +78,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sorties/inscription/{id}", name="sortie_inscription")
      */
-    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em, EtatRepository $er): Response{
+    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em): Response{
 
         $user = $this->getUser();
         $tabEtat = array("Clôturée","Passée","Annulée");
@@ -133,6 +133,7 @@ class SortieController extends AbstractController
             $info['id'] = $sortie->getId();
             $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
             $info['siteOrga'] = $sortie->getCampus()->getNom();
+            $info['idcampus'] = $sortie->getCampus()->getId();
             $info['userInscrit'] = $userParticipant;
 
             $tab []= $info;
