@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/listeDesSorties.css') }}">
+{% endblock %}
 
 {% block title %}Liste des sorties{% endblock %}
 
@@ -14,10 +17,10 @@
         </select>
     </div>
 
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row-cols-auto">
 
-            <div class="offset-1 col-10">
+            <div class="col-12">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -46,22 +49,21 @@
             <td>4</td>
             <td><i class="fas fa-check" ></i></td>
             <td>6</td>
-
             <!-- 7-->
              <td>
-                <a href="#" class="btn btn-primary">Se désister</a>
+                <a href="#" class="btn btn-secondary" id="btnDesist">Se désister</a>
             </td>
             <!-- 8-->
             <td>
-                <a href="#" >Modifier</a>
+                <a href="#" class="btn btn-secondary">Modifier</a>
             </td>
             <!-- 9-->
             <td>
-                <a href="#">Afficher</a>
+                <a href="#"class="btn btn-secondary">Afficher</a>
             </td>
             <!-- 10 -->
             <td>
-                <a href="#">S'inscrire</a>
+                <a href="#"class="btn btn-secondary">S'inscrire</a>
             </td>
         </tr>
     </template>

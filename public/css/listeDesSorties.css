@@ -1,0 +1,25 @@
+*{
+    box-sizing: content-box !important;
+}
+table{
+    width: 100% !important;
+}
+
+tr{
+    width: 100px;
+}
+.btn-secondary{
+    background-color: #8064A2 !important;
+    width:90px;
+    line-height:30px;
+}
+#btnDesist{
+    size: 20px;
+}
+.btn-secondary:hover{
+    background-color : #671fcb !important;
+    transition-duration: 2s;
+    transition-delay: 1s;
+    transform: scale(1.1);
+
+}

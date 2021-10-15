@@ -3,9 +3,9 @@ function afficherVille(tableau){
     let template = document.querySelector('#selecttemplate');
     for (let v of tableau){
         let clone = template.content.cloneNode(true);
-        let liste = clone.querySelectorAll("option");
-        liste[0].innerHTML = v.nom;
-        liste[0].setAttribute('value' ,v.id);
+        let liste = clone.querySelector("option");
+        liste.innerHTML = v.nom;
+        liste.setAttribute('value' ,v.id);
         bodyListe.appendChild(clone);
     }
 }
@@ -18,7 +18,6 @@ let url2 = 'http://localhost:8000/api_lieu'
 fetch(url2).then(response => response.json())
     .then(tab =>
     {lieux = tab;});
-
 
 function changeLieu(){
     let option = document.querySelector('#maListeVille');
