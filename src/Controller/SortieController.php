@@ -106,6 +106,7 @@ class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->removeParticipantsInscrit($user);
         $em->flush();
+        $this->addFlash('success',"Vous avez été désinscrit avec succès ! ");
         return $this->redirectToRoute('liste_sorties');
     }
     /**
@@ -120,9 +121,9 @@ class SortieController extends AbstractController
             $userParticipant = false;
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
-            $info['dateHeureDebut'] = $sortie->getDateHeureDebut();
+            $info['dateHeureDebut'] = $sortie->getDateHeureDebut()->format('d/m/Y');
             $info['duree'] = $sortie->getDuree();
-            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription();
+            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription()->format('d/m/Y');
             $info['nbInscriptionsMax'] = $sortie->getNbInscriptionsMax();
             $info['infosSortie'] = $sortie->getInfosSortie();
             $info['etat'] = $sortie->getEtat()->getLibelle();
@@ -137,5 +138,10 @@ class SortieController extends AbstractController
         }
         return $this->json($tab);
     }
+    /**
+     * @Route ("/sorties/modifier{id}/annuler")
+     */
+    public function annulerSortie(){
 
+    }
 }

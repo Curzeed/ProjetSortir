@@ -20,8 +20,8 @@ function afficherSortie(tableau){
         let tabTd = clone.querySelectorAll('td');
         console.log(dateActuelle.getUTCDate())
         tabTd[0].innerHTML = s.nom;
-        tabTd[1].innerHTML = s.dateHeureDebut.substr(0, 9);
-        tabTd[2].innerHTML = s.dateLimiteInscription.substr(0,9);
+        tabTd[1].innerHTML = s.dateHeureDebut;
+        tabTd[2].innerHTML = s.dateLimiteInscription;
         tabTd[3].innerHTML = s.nbParticipantsInscrits + "/" + s.nbInscriptionsMax;
         tabTd[4].innerHTML = s.etat;
         tabTd[6].innerHTML = s.organisateur;
@@ -34,8 +34,8 @@ function afficherSortie(tableau){
         }if(s.userInscrit === true) {
             tabTd[10].querySelector('a').setAttribute('hidden', '');
         }
-        let nouvelledate = new Date(s.dateLimiteInscription.substr(0,9));
-        if(s.etat === 'passée' || isValidDate(nouvelledate) === false){
+        let nouvelledate = new Date(s.dateLimiteInscription);
+        if(s.etat === 'passée' || isValidDate(nouvelledate) === true){
             tabTd[10].querySelector('a').setAttribute('hidden', '') ;
 
         }
