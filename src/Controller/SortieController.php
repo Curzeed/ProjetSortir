@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -77,12 +78,24 @@ class SortieController extends AbstractController
     /**
      * @Route("/sorties/inscription/{id}", name="sortie_inscription")
      */
-    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em): Response{
+    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em, EtatRepository $er): Response{
 
         $user = $this->getUser();
-        $sortie->addParticipantsInscrit($user);
-        $em->persist($sortie);
-        $em->flush();
+        $tabEtat = array("Clôturée","Passée","Annulée");
+        $etatActuelSortie = $sortie->getEtat()->getLibelle();
+        if(in_array($etatActuelSortie,$tabEtat) ){
+            $this->addFlash('notice',
+                "Vous ne pouvez pas vous inscrire à cette sortie car elle est ". $sortie->getEtat()->getLibelle());
+            return $this->redirectToRoute('liste_sorties');
+        }else{
+            $this->addFlash('success', "
+            Votre inscription à bien été prise en compte
+            ");
+            $sortie->addParticipantsInscrit($user);
+            $em->persist($sortie);
+            $em->flush();
+        }
+
 
         return $this->redirectToRoute('liste_sorties');
     }

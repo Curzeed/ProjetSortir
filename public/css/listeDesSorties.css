@@ -23,3 +23,9 @@ tr{
     transform: scale(1.1);
 
 }
+.table>tbody{
+    vertical-align: unset !important;
+}
+.table>thead {
+    vertical-align: unset !important;
+}

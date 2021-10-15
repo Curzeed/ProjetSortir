@@ -3,11 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/icons8-globe-terrestre-30.png') }}" type="image/x-icon/png">
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         {% block stylesheets %}
-            <link rel="icon" href="{{ asset('img/icons8-globe-terrestre-30.png') }}" type="image/x-icon/png">
+
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% endblock %}
 
@@ -26,7 +27,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="{{ path('liste_sorties') }}" class="navabar-brand">
-                            <img src="{{ asset('img/globe-44.gif') }}" alt="logo" style="width: 40px;">
+                            <img src="{{ asset('img/icons8-globe-terrestre-30.png') }}" alt="logo" style="width: 40px;">
                         </a>
                     </li>
                     <li class="nav-item">

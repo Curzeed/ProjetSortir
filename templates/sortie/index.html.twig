@@ -17,6 +17,11 @@
         </select>
     </div>
 
+    {% for message in app.flashes('notice') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container-fluid">
         <div class="row-cols-auto">
 
