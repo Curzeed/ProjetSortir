@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block contenu %}
+    {{ form_start(formSortie) }}
+    {{ form_widget(formSortie) }}
+    <label for="">Villes : </label>
+    <select name="ville" id="maListeVille" onchange="changeLieu()">
+        <option value="#"> Séléctionnez une ville</option>
+
+    </select><br>
+    <label for="">Lieux : </label>
+        <select name="lieu" id="maListeLieu">
+            <option value="#"> Séléctionnez un lieu</option>
+        </select><br>
+    <button>Envoyer</button>
+    {{ form_end(formSortie) }}
+    <template id="selecttemplate">
+        <option></option>
+    </template>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('javascript/NouvelleSortie.js') }}"></script>
+{% endblock %}

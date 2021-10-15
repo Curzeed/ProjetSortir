@@ -119,15 +119,17 @@ class SortieController extends AbstractController
         foreach ($liste as $sortie){
             $sortie = $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
+            $estOrganisateur = $s->verifSiOrganisateur($sortie, $this->getUser());
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
-            $info['dateHeureDebut'] = $sortie->getDateHeureDebut()->format('d/m/Y');
+            $info['dateHeureDebut'] = $sortie->getDateHeureDebut()->format('d/m/Y H:i');
             $info['duree'] = $sortie->getDuree();
-            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription()->format('d/m/Y');
+            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription()->format('d/m/Y H:i');
             $info['nbInscriptionsMax'] = $sortie->getNbInscriptionsMax();
             $info['infosSortie'] = $sortie->getInfosSortie();
             $info['etat'] = $sortie->getEtat()->getLibelle();
             $info['organisateur'] = $sortie->getOrganisateur()->getNom();
+            $info['EstOrganisateur'] = $estOrganisateur;
             $info['id'] = $sortie->getId();
             $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
             $info['siteOrga'] = $sortie->getCampus()->getNom();
@@ -139,9 +141,27 @@ class SortieController extends AbstractController
         return $this->json($tab);
     }
     /**
-     * @Route ("/sorties/modifier{id}/annuler")
+     * @Route("/sorties/modifier/{id}")
      */
-    public function annulerSortie(){
+    public function annulerSortie(Sortie $sortie, SortieRepository $sr, Services $s, Request $request, LieuRepository $lr, EntityManagerInterface $entityManager){
+        $user = $this->getUser();
+        $isOrga = $s->verifSiOrganisateur($sortie, $user);
+        if ($isOrga == true ){
+            $formSortie = $this->createForm(SortieType::class, $sortie);
+            $formSortie->handleRequest($request);
 
+            if($formSortie->isSubmitted() && $formSortie->isValid()){
+                $lieuId = $request->get('lieu');
+                $lieu = $lr->find($lieuId);
+                $sortie->setLieu($lieu);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                return $this->redirectToRoute('liste_sorties',compact('sortie'));
+            }return $this->renderForm('sortie/modifier.html.twig',compact('sortie', 'formSortie'));
+
+        }else{
+            $this->addFlash('error',"Vous n'êtes pas l'organisateur de cette sortie donc vous ne pouvez pas la modifier");
+            return $this->render('sortie/index.html.twig');
+        }
     }
 }

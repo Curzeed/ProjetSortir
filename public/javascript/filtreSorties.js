@@ -37,7 +37,8 @@ function afficherSortie(tableau){
         let nouvelledate = new Date(s.dateLimiteInscription);
         if(s.etat === 'passée' || isValidDate(nouvelledate) === true){
             tabTd[10].querySelector('a').setAttribute('hidden', '') ;
-
+        }if(s.estOrganisateur === true){
+            tabTd[8].querySelector('a').setAttribute('hidden','');
         }
         body.appendChild(clone);
     }

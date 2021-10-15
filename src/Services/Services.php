@@ -42,6 +42,14 @@ class Services
         $this->em->flush();
         return $sortie;
     }
+    function verifSiOrganisateur(Sortie $sortie, $user){
+
+        if ($sortie->getOrganisateur()->getUserIdentifier() == $user->getUserIdentifier()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }

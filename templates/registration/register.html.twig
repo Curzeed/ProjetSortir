@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleRegister.css') }}">
+{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block contenu %}
-    <h1>Register</h1>
+    <h1>Inscription</h1>
+<div class="formulaire">
+
 
     {{ form_start(registrationForm) }}
     {{ form_widget(registrationForm) }}
@@ -14,6 +18,7 @@
 {#        }) }}#}
 {#        {{ form_row(registrationForm.agreeTerms) }}#}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-secondary">Register</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
