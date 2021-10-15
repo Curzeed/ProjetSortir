@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ParticipantController extends AbstractController
 {
@@ -27,7 +28,7 @@ class ParticipantController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route ("/monProfil/{id}" , name="profil_participant")
      */
-    public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr): Response
+    public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr, SluggerInterface $slugger): Response
     {
         //Récupere un objet Participant
         $profilConnecte = $pr->findOneBy(["id" => $id]);
@@ -41,6 +42,30 @@ class ParticipantController extends AbstractController
         $formModif->handleRequest($request);
         //S'il est envoyé et valide alors....
         if ($formModif->isSubmitted() && $formModif->isValid()) {
+            $image = $formModif->get('image')->getData();
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $image->move(
+                        $this->getParameter('image_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $profilConnecte->setImage($newFilename);
+            }
+
+
+
             //....Persist = récupère les infos
             $em->persist($profilConnecte);
             //....Flush = envoie les infos

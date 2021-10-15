@@ -22,6 +22,8 @@ class ParticipantType extends AbstractType
             //->add('actif')
             //->add('estInscrit')
             ->add('campus')
+
+
         ;
     }
 
