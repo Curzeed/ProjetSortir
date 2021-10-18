@@ -16,11 +16,17 @@ function afficherSortie(tableau){
     let urlModif = 'http://localhost:8000/sorties/detail/';
     let urlDesister = 'http://localhost:8000/sorties/desister/';
     let urlInscription = 'http://localhost:8000/sorties/inscription/';
+    let urlModifSortie = 'http://localhost:8000/sorties/modifier/';
+    let urlAnnulerSortie = 'http://localhost:8000/sorties/annuler/'
+
     body.innerHTML = '';
     for (let s of tableau){
         let urlInscription2 = urlInscription+s.id;
         let urlDesister2 = urlDesister+s.id;
         let urlModif2 = urlModif+s.id;
+        let urlModifSortie2 = urlModifSortie+s.id;
+        let urlAnnulerSortie2 = urlAnnulerSortie+s.id;
+
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
         tabTd[0].innerHTML = s.nom;
@@ -32,6 +38,8 @@ function afficherSortie(tableau){
         tabTd[9].querySelector('a').setAttribute('href',urlModif2);
         tabTd[7].querySelector('a').setAttribute('href', urlDesister2);
         tabTd[10].querySelector('a').setAttribute('href',urlInscription2);
+        tabTd[8].querySelector('a').setAttribute('href',urlModifSortie2);
+        tabTd[11].querySelector('a').setAttribute('href',urlAnnulerSortie2);
         if (s.userInscrit === false){
             tabTd[5].querySelector('i').setAttribute('hidden', '');
             tabTd[7].querySelector('a').setAttribute('hidden','');
@@ -41,8 +49,10 @@ function afficherSortie(tableau){
         let nouvelledate = new Date(s.dateLimiteInscription);
         if(s.etat === 'passée' || isValidDate(nouvelledate) === true){
             tabTd[10].querySelector('a').setAttribute('hidden', '') ;
-        }if(s.estOrganisateur === true){
+        }
+        if(s.EstOrganisateur === false){
             tabTd[8].querySelector('a').setAttribute('hidden','');
+            tabTd[11].querySelector('a').setAttribute('hidden','');
         }
         body.appendChild(clone);
     }

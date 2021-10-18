@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
@@ -147,6 +149,7 @@ class SortieController extends AbstractController
     public function modifier(Sortie $sortie, SortieRepository $sr, Services $s, Request $request, LieuRepository $lr, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
+
         if ($isOrga == true ){
             $formSortie = $this->createForm(SortieType::class, $sortie);
             $formSortie->handleRequest($request);
@@ -169,13 +172,27 @@ class SortieController extends AbstractController
     /**
      * @Route("/sorties/annuler/{id}", name="sorties_annuler")
      */
-    public function annulerSortie(SortieRepository $sr,$id, Services $s){
+    public function annulerSortie(SortieRepository $sr,$id, Services $s, Request $request, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $sortie = $sr->find($id);
+        $etat =
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
         if($isOrga == true){
-            $sortie->setInfosSortie();
-        }
+            $form = $this->createForm(AnnulerSortieType::class, $sortie);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $entityManager->persist($sortie);
+                $sortie->setEtat($etat);
+                $entityManager->flush();
+                return $this->redirectToRoute('liste_sorties',compact('sortie'));
+            }return $this->renderForm('sortie/annuler.html.twig',compact('sortie', 'form'));
+
+        }else{
+            $this->addFlash('error',"Vous n'êtes pas l'organisateur de cette sortie donc vous ne pouvez pas l'annuler");
+            return $this->render('sortie/index.html.twig');
     }
+    }
+
 
 }
