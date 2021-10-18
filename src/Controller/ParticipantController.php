@@ -9,6 +9,7 @@ use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,10 +29,10 @@ class ParticipantController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route ("/monProfil/{id}" , name="profil_participant")
      */
-    public function modifierMonProfil(EntityManagerInterface $em, $id, Request $request, ParticipantRepository $pr, SluggerInterface $slugger): Response
+    public function modifierMonProfil(EntityManagerInterface $em,Participant $id, Request $request, ParticipantRepository $pr, SluggerInterface $slugger): Response
     {
         //Récupere un objet Participant
-        $profilConnecte = $pr->findOneBy(["id" => $id]);
+        $profilConnecte = $id;
         //lui dit que son profil est actif
         $profilConnecte->setActif(true);
         //lu idit que son password est son password

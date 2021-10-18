@@ -38,8 +38,10 @@
                         {{ form_end(formModif) }}
 
     </div>
+    {% if app.user.image %}
+        <img src="{{ asset(app.user.image) }}" class="image" alt=""/>
+    {% endif %}
 
-    <img src="{{ asset(app.user.image) }}" class="image" alt=""/>
 
 {% endblock %}
 
