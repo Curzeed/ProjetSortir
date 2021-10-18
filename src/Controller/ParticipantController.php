@@ -35,7 +35,7 @@ class ParticipantController extends AbstractController
         $profilConnecte = $id;
         //lui dit que son profil est actif
         $profilConnecte->setActif(true);
-        //lu idit que son password est son password
+        //lui dit que son password est son password
         $profilConnecte->setPassword($profilConnecte->getPassword());
         //Création d'une variable pour recupérer les informations du formulaire lié à ce controller
         $formModif = $this->createForm(ParticipantModifType::class, $profilConnecte);
@@ -49,22 +49,16 @@ class ParticipantController extends AbstractController
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-
-
                 try {
                     $image->move(
                         $this->getParameter('image_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-
                 }
                 $photoProfil = "profil/".$newFilename;
                 $profilConnecte->setImage($photoProfil);
             }
-
-
-
             //....Persist = récupère les infos
             $em->persist($profilConnecte);
             //....Flush = envoie les infos
@@ -97,5 +91,15 @@ class ParticipantController extends AbstractController
             compact('formModifMotDePasse'));
     }
 
+        /**
+         *@Route ("/participants/infos/{pseudo}" , name="participant_sortie")
+         */
+        public function afficherParticipantSortie( $pseudo, ParticipantRepository $pr){
+
+            // On appelle le pseudo afin de recuperer les infos dans le twig"afficherParticipantSortie"
+                $utilisateur = ($pr->findOneBy(['username'=>$pseudo]));
+                return $this->render('sortie/afficherParticipantSortie.html.twig',
+                        compact('utilisateur'));
+        }
 
 }

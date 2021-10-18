@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleRegister.css') }}">
+{% endblock %}
+
+{% block title %} {% endblock %}
+{% block contenu %}
+    <div class="photo">
+
+        {# On appelle l'image du profil qui se trouve dans le twig "infos" de l'utilisateur en quesion #}
+        {% if app.user.image %}
+            <img src="{{ asset(app.user.image) }}" class="image" alt=""/>
+        {% endif %}
+    </div>
+
+    {# On appelle les infos necessaires du profil de l'utilisateur en quesion
+    qui se trouve dans le twig en question#}
+
+    <div class="pseudo">
+        <label for=""></label>
+        {{ utilisateur.username }}
+    </div>
+    <div class="prenom">
+        <label for="">Prénom : </label>
+        {{ utilisateur.prenom }}
+    </div>
+    <div class="Nom">
+        <label for="">Nom : </label>
+        {{ utilisateur.nom }}
+    </div>
+    <div class="télephone">
+        <label for="">Téléphone : </label>
+        {{ utilisateur.telephone }}
+    </div>
+    <div class="email">
+        <label for="">Email : </label>
+        {{ utilisateur.email }}
+    </div>
+    <div class="Campus">
+        <label for="">Campus : </label>
+        {{ utilisateur.campus.nom }}
+    </div>
+
+    <div class="retour">
+        <button onclick=" window.history.back();">Retour</button>
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
