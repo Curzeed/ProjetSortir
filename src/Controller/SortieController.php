@@ -117,9 +117,8 @@ class SortieController extends AbstractController
     public function apiSorties(SortieRepository $sr, Services $s){
         $liste = $sr->findAll();
         $tab = [];
-
         foreach ($liste as $sortie){
-            $sortie = $s->verifSiDateEstPassee($sortie);
+            $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
             $estOrganisateur = $s->verifSiOrganisateur($sortie, $this->getUser());
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
@@ -172,26 +171,33 @@ class SortieController extends AbstractController
     /**
      * @Route("/sorties/annuler/{id}", name="sorties_annuler")
      */
-    public function annulerSortie(SortieRepository $sr,$id, Services $s, Request $request, EntityManagerInterface $entityManager){
+    public function annulerSortie(Sortie $sortie,
+
+                                  Services $s,
+                                  Request $request,
+                                  EntityManagerInterface $entityManager,
+                                  EtatRepository $er){
         $user = $this->getUser();
-        $sortie = $sr->find($id);
-        $etat =
+        $etat = $er->find(6);
+        //$sortie = $sr->find($id);
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
         if($isOrga == true){
             $form = $this->createForm(AnnulerSortieType::class, $sortie);
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
-                $entityManager->persist($sortie);
                 $sortie->setEtat($etat);
+
+                //$entityManager->persist($sortie);
                 $entityManager->flush();
+               // dd($sortie);
                 return $this->redirectToRoute('liste_sorties',compact('sortie'));
             }return $this->renderForm('sortie/annuler.html.twig',compact('sortie', 'form'));
 
         }else{
             $this->addFlash('error',"Vous n'êtes pas l'organisateur de cette sortie donc vous ne pouvez pas l'annuler");
             return $this->render('sortie/index.html.twig');
-    }
+        }
     }
 
 

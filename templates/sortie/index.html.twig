@@ -13,11 +13,11 @@
 
     <div>
         <select id="listeCampus" onchange="filtre()">
-            <option value="#">Séléctionnez une ville : </option>
+            <option value="0">Séléctionnez une ville : </option>
         </select>
     </div>
 <div class="col-4">
-    <input type="text" class="form-control" onKeyUp="filtre()" id="sortie">
+    <input type="text" id="sortie" class="form-control" onKeyUp="filtre()" >
 </div>
     {% for message in app.flashes('notice') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
         <div class="flash-notice">
@@ -25,6 +25,11 @@
         </div>
     {% endfor %}
     {% for message in app.flashes('success') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
         <div class="flash-success">
             {{ message }}
         </div>

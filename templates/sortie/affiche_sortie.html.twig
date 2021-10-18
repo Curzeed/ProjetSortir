@@ -8,13 +8,13 @@
 {% block title %}{{ sortie.nom}}{% endblock %}
 
 {% block contenu %}
-{#    {% if sortie.etat.nom is "Annulée" %}   #}
-{#        <div class="container">#}
-{#            <h1>Motif d'annulation : </h1>#}
-{#            #}
-{#            <p> {{ sortie.infosSortie }}</p>#}
-{#        </div>#}
-{#    {% endif %}#}
+    {% if sortie.etat.libelle == "Annulée" %}
+        <div class="container">
+            <h1>Motif d'annulation : </h1>
+
+            <p> {{ sortie.infosSortie }}</p>
+        </div>
+    {% endif %}
     <div class="titre">
         <h1>Afficher une sortie</h1>
     </div>
@@ -82,7 +82,7 @@
             {% for p in sortie.participantsInscrits %}
                 <tr>
 
-                    <td><a href="">{{ p.username }}</a></td>
+                    <td>  {{ p.username }}</td>
                     <td>  {{ p.nom }} {{ p.prenom }}</td>
 
                 </tr>

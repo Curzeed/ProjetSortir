@@ -9,6 +9,7 @@ fetch(url).then(response => response.json())
 .then(tableau => {
     afficherSortie(tableau);
     tab = tableau;
+    console.log(tab);
 });
 function afficherSortie(tableau){
     let body = document.querySelector('#myTbody');
@@ -17,7 +18,7 @@ function afficherSortie(tableau){
     let urlDesister = 'http://localhost:8000/sorties/desister/';
     let urlInscription = 'http://localhost:8000/sorties/inscription/';
     let urlModifSortie = 'http://localhost:8000/sorties/modifier/';
-    let urlAnnulerSortie = 'http://localhost:8000/sorties/annuler/'
+    let urlAnnulerSortie = 'http://localhost:8000/sorties/annuler/';
 
     body.innerHTML = '';
     for (let s of tableau){
@@ -82,16 +83,39 @@ function isValidDate(d) {
 }
 
 function filtre(){
-    let nom = document.querySelector('#sortie').value;
-    let campus = document.querySelector('#listeCampus').value
+    let tab2 =[];
+    tab2 = filtreNom(tab);
+    tab2 = filtreCampus(tab2);
 
+    afficherSortie(tab2);
+}
+function filtreNom(tableau){
     let tab2 = [];
-        for (let s of tab) {
+    let nom = document.querySelector('#sortie').value;
+    if (nom.length >0) {
+        for (let s of tableau) {
             // Vérifier que la sortie contient un nom
-            if (s.nom.indexOf(nom) != -1) {
+            if (s.nom.indexOf(nom) !== -1) {
                 tab2.push(s);
             }
         }
+    }else{
+        tab2 = tableau; // pas de filtre
+    }
+    return tab2;
+}
 
-    afficherSortie(tab2);
+function filtreCampus(tableau){
+    let tab2 =[];
+    let campus = document.querySelector('#listeCampus').value;
+    if (campus !=0){
+        for (let s of tableau) {
+            if (s.idcampus == campus){
+                tab2.push(s);
+            }
+        }
+    }else{
+        tab2 = tableau;
+    }
+    return tab2;
 }
