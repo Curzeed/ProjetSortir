@@ -142,9 +142,9 @@ class SortieController extends AbstractController
         return $this->json($tab);
     }
     /**
-     * @Route("/sorties/modifier/{id}")
+     * @Route("/sorties/modifier/{id}", name="sorties_modifier")
      */
-    public function annulerSortie(Sortie $sortie, SortieRepository $sr, Services $s, Request $request, LieuRepository $lr, EntityManagerInterface $entityManager){
+    public function modifier(Sortie $sortie, SortieRepository $sr, Services $s, Request $request, LieuRepository $lr, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
         if ($isOrga == true ){
@@ -165,4 +165,17 @@ class SortieController extends AbstractController
             return $this->render('sortie/index.html.twig');
         }
     }
+
+    /**
+     * @Route("/sorties/annuler/{id}", name="sorties_annuler")
+     */
+    public function annulerSortie(SortieRepository $sr,$id, Services $s){
+        $user = $this->getUser();
+        $sortie = $sr->find($id);
+        $isOrga = $s->verifSiOrganisateur($sortie, $user);
+        if($isOrga == true){
+            $sortie->setInfosSortie();
+        }
+    }
+
 }
