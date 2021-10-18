@@ -86,7 +86,7 @@ function filtre(){
     let tab2 =[];
     tab2 = filtreNom(tab);
     tab2 = filtreCampus(tab2);
-
+    tab2 = filtreSortiesOrganisateur(tab2);
     afficherSortie(tab2);
 }
 function filtreNom(tableau){
@@ -112,6 +112,20 @@ function filtreCampus(tableau){
         for (let s of tableau) {
             if (s.idcampus == campus){
                 tab2.push(s);
+            }
+        }
+    }else{
+        tab2 = tableau;
+    }
+    return tab2;
+}
+function filtreSortiesOrganisateur(tableau){
+    let tab2 = [];
+    let checkboxOrganisateur = document.querySelector('#checkboxOrganisateur');
+    if (checkboxOrganisateur.checked){
+        for (let s of tableau){
+            if (s.EstOrganisateur === true){
+                tab2.push();
             }
         }
     }else{
