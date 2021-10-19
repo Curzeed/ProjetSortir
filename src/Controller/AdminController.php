@@ -3,17 +3,59 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Repository\ParticipantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin/pouvoirAdmin', name: 'admin_utilisateur')]
-    public function pouvoirAdmin()
+    #[Route('/admin', name: 'admin_utilisateur')]
+    public function pouvoirAdmin(ParticipantRepository $pr,)
     {
-        $pouvoirAdmin = new participant;
+        $users = $pr->findAll();
         return $this->render('admin/pouvoirAdmin.html.twig',
-            compact('pouvoirAdmin'));
+            compact('users'));
         }
+
+    /**
+     * @Route ("/admin/setActivity/{id}" , name="admin_setActivity")
+     */
+    public function setActivity(Participant $id,EntityManagerInterface $em ){
+        if($id->getActif() == 0){
+            $id->setActif(1);
+        }else{
+            $id->setActif(0);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('admin_utilisateur');
+    }
+    /**
+     * @Route ("/admin/delete/{id}" , name="admin_delete")
+     */
+    public function deleteUser (Participant $id,EntityManagerInterface $em){
+        $em->remove($id);
+        $em->flush();
+
+        return $this-> redirectToRoute('admin_utilisateur');
+    }
+    /**
+     * @Route ("/admin/role/{id}" , name="admin_role")
+     */
+    public function role(Participant $p,EntityManagerInterface $em){
+
+        $tab = $p->getRoles();
+        if($tab[0] =="ROLE_ADMIN"){
+            $p->setRoles(['ROLE_USER']);
+        }else{
+            $p->setRoles(['ROLE_ADMIN']);
+        }
+
+        $em->persist($p);
+        $em->flush();
+        return $this->redirectToRoute('admin_utilisateur');
+    }
 }
