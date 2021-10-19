@@ -26,8 +26,19 @@ class VilleController extends AbstractController
         foreach ($liste as $ville){
             $info['nom'] = $ville->getNom();
             $info['id'] = $ville->getId();
+            $info['codePostal'] = $ville->getCodepostal();
             $tab[]= $info;
         }
         return $this->json($tab);
+    }
+
+    /**
+     * @Route ("/villes/afficher" , name="afficher_ville")
+     */
+    public function afficherVille( VilleRepository $vr){
+        $villes = $vr->findAll();
+        return $this->render('ville/afficherVille.html.twig',
+        compact('villes'));
+
     }
 }
