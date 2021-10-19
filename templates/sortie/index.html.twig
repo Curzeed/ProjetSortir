@@ -16,6 +16,7 @@
             <option value="0">Séléctionnez une ville : </option>
         </select>
     </div>
+
 <div class="col-4">
     <input type="text" id="sortie" class="form-control" onKeyUp="filtre()" >
 </div>
@@ -83,36 +84,40 @@
             </div>
         </div>
     </div>
-    <template id="ligne">
-        <tr>
-            <td>0</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td><i class="fas fa-check" ></i></td>
-            <td>6</td>
-            <!-- 7-->
-             <td>
-                <a href="#" class="btn btn-secondary" id="btnDesist">Se désister</a>
-            </td>
-            <!-- 8-->
-            <td>
-                <a href="#" class="btn btn-secondary">Modifier</a>
-            </td>
-            <!-- 9-->
-            <td>
-                <a href="#"class="btn btn-secondary">Afficher</a>
-            </td>
-            <!-- 10 -->
-            <td>
-                <a href="#"class="btn btn-secondary">S'inscrire</a>
-            </td>
-            <td>
-                <a href="#" class="btn btn-secondary">Annuler</a>
-            </td>
-        </tr>
-    </template>
+    <div class="container-fluid">
+        <template id="ligne">
+
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td><i class="fas fa-check" ></i></td>
+                    <td><a href=""></a>6</td>
+                    <!-- 7-->
+                     <td>
+                        <a href="#" class="btn btn-secondary" id="btnDesist">Se désister</a>
+                    </td>
+                    <!-- 8-->
+                    <td>
+                        <a href="#" class="btn btn-secondary">Modifier</a>
+                    </td>
+                    <!-- 9-->
+                    <td>
+                        <a href="#"class="btn btn-secondary">Afficher</a>
+                    </td>
+                    <!-- 10 -->
+                    <td>
+                        <a href="#"class="btn btn-secondary">S'inscrire</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Annuler</a>
+                    </td>
+                </tr>
+
+        </template>
+    </div>
 </div>
     <template id="templateCampus">
         <option></option>

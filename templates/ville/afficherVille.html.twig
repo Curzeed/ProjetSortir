@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block title %} {% endblock %}
+{% block contenu %}
+
+    {# On appelle les infos necessaires du profil de l'utilisateur en quesion
+    qui se trouve dans le twig en question#}
+    {% for ville in villes %}
+{#        <div class="pseudo">#}
+{#            <label for=""></label>#}
+{#            {{ ville.nom }}#}
+{#        </div>#}
+{#        <div class="pseudo">#}
+{#            <label for=""></label>#}
+{#            {{ ville.codepostal }}#}
+{#        </div>#}
+
+    {% endfor %}
+
+    <div class="col-4">
+        <input type="text" id="ville" class="form-control" onKeyUp="filtre1()" >
+
+    </div>
+    {{ form_start(formtest) }}
+    <div class="col-6">
+    <div class="container-fluid">
+        <div class="row-cols-auto">
+
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Ville</th>
+                        <th scope="col">Code postal</th>
+                        <th scope="col" colspan="2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myTbody">
+                    </tbody>
+                    <td>{{ form_widget(formtest.nom) }}
+                    </td>
+                    <td>
+                        {{ form_widget(formtest.codepostal) }}
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary">Ajouter</button>
+                    </td>
+                </table>
+            </div>
+        </div>
+        {{ form_end(formtest) }}
+    </div>
+    <div class="container-fluid">
+        <template id="ligne">
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>
+                    <a href="#" class="btn btn-secondary">Modifier</a>
+                </td>
+
+                <td>
+                    <a href="#" class="btn btn-secondary">Supprimer</a>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+        </template>
+    </div>
+
+
+    </div>
+    <template id="templateCampus">
+        <option></option>
+    </template>
+    <script src="{{ asset('javascript/afficherVille.js') }}">
+    </script>
+
+
+
+{% endblock %}
