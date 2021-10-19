@@ -50,7 +50,7 @@ function afficherSortie(tableau){
             tabTd[10].querySelector('a').setAttribute('hidden', '');
         }
         let nouvelledate = new Date(s.dateLimiteInscription);
-        if(s.etat === 'passée' || isValidDate(nouvelledate) === true){
+        if(s.etat === 'Passée'){
             tabTd[10].querySelector('a').setAttribute('hidden', '') ;
         }
         if(s.EstOrganisateur === false){
