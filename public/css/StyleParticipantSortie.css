@@ -7,3 +7,15 @@ div.infos{
 div.infos>div{
     margin-bottom: 5px;
 }
+.btn-secondary{
+    border-radius: 10px;
+    background-color: #8064A2 !important;
+    width:90px;
+    line-height:30px;
+}
+.btn-secondary:hover{
+    background-color : #671fcb !important;
+    border-radius: 10px;
+    transition-duration: 2s;
+    transform: scale(1.1);
+}

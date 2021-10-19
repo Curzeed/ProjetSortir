@@ -29,35 +29,38 @@ function afficherSortie(tableau){
         let urlAnnulerSortie2 = urlAnnulerSortie+s.id;
         let dateHeureDebut = new Date(s.dateHeureDebut);
         let dateLimiteInscription = new Date(s.dateLimiteInscription);
-
+        let date = new Date(Date.now());
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
-        tabTd[0].innerHTML = s.nom;
-        tabTd[1].innerHTML = dateHeureDebut.toLocaleDateString("fr-FR");
-        tabTd[2].innerHTML = dateLimiteInscription.toLocaleDateString("fr-FR");
-        tabTd[3].innerHTML = s.nbParticipantsInscrits + "/" + s.nbInscriptionsMax;
-        tabTd[4].innerHTML = s.etat;
-        tabTd[6].innerHTML = s.organisateur;
-        tabTd[9].querySelector('a').setAttribute('href',urlModif2);
-        tabTd[7].querySelector('a').setAttribute('href', urlDesister2);
-        tabTd[10].querySelector('a').setAttribute('href',urlInscription2);
-        tabTd[8].querySelector('a').setAttribute('href',urlModifSortie2);
-        tabTd[11].querySelector('a').setAttribute('href',urlAnnulerSortie2);
-        if (s.userInscrit === false){
-            tabTd[5].querySelector('i').setAttribute('hidden', '');
-            tabTd[7].querySelector('a').setAttribute('hidden','');
-        }if(s.userInscrit === true) {
-            tabTd[10].querySelector('a').setAttribute('hidden', '');
+        if(dateHeureDebut.getMonth() != date.getMonth()-1){
+            tabTd[0].innerHTML = s.nom;
+            tabTd[1].innerHTML = dateHeureDebut.toLocaleDateString("fr-FR");
+            tabTd[2].innerHTML = dateLimiteInscription.toLocaleDateString("fr-FR");
+            tabTd[3].innerHTML = s.nbParticipantsInscrits + "/" + s.nbInscriptionsMax;
+            tabTd[4].innerHTML = s.etat;
+            tabTd[6].innerHTML = s.organisateur;
+            tabTd[9].querySelector('a').setAttribute('href',urlModif2);
+            tabTd[7].querySelector('a').setAttribute('href', urlDesister2);
+            tabTd[10].querySelector('a').setAttribute('href',urlInscription2);
+            tabTd[8].querySelector('a').setAttribute('href',urlModifSortie2);
+            tabTd[11].querySelector('a').setAttribute('href',urlAnnulerSortie2);
+            if (s.userInscrit === false){
+                tabTd[5].querySelector('i').setAttribute('hidden', '');
+                tabTd[7].querySelector('a').setAttribute('hidden','');
+            }if(s.userInscrit === true) {
+                tabTd[10].querySelector('a').setAttribute('hidden', '');
+            }
+            let nouvelledate = new Date(s.dateLimiteInscription);
+            if(s.etat === 'Passée'){
+                tabTd[10].querySelector('a').setAttribute('hidden', '') ;
+            }
+            if(s.EstOrganisateur === false){
+                tabTd[8].querySelector('a').setAttribute('hidden','');
+                tabTd[11].querySelector('a').setAttribute('hidden','');
+            }
+            body.appendChild(clone);
         }
-        let nouvelledate = new Date(s.dateLimiteInscription);
-        if(s.etat === 'Passée'){
-            tabTd[10].querySelector('a').setAttribute('hidden', '') ;
-        }
-        if(s.EstOrganisateur === false){
-            tabTd[8].querySelector('a').setAttribute('hidden','');
-            tabTd[11].querySelector('a').setAttribute('hidden','');
-        }
-        body.appendChild(clone);
+
     }
 }
 fetch(urlCampus).then(response => response.json())
