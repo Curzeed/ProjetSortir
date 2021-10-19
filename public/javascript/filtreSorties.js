@@ -1,6 +1,6 @@
 let url = 'http://localhost:8000/api/sortie';
 let urlCampus = 'http://localhost:8000/campus/api';
-let tab = [];
+let tabGlobal = [];
 
 const dateActuelle= new Date(Date.now());
 
@@ -8,8 +8,8 @@ const dateActuelle= new Date(Date.now());
 fetch(url).then(response => response.json())
 .then(tableau => {
     afficherSortie(tableau);
-    tab = tableau;
-    console.log(tab);
+    tabGlobal = tableau;
+    console.log(tabGlobal);
 });
 function afficherSortie(tableau){
     let body = document.querySelector('#myTbody');
@@ -27,12 +27,14 @@ function afficherSortie(tableau){
         let urlModif2 = urlModif+s.id;
         let urlModifSortie2 = urlModifSortie+s.id;
         let urlAnnulerSortie2 = urlAnnulerSortie+s.id;
+        let dateHeureDebut = new Date(s.dateHeureDebut);
+        let dateLimiteInscription = new Date(s.dateLimiteInscription);
 
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
         tabTd[0].innerHTML = s.nom;
-        tabTd[1].innerHTML = s.dateHeureDebut;
-        tabTd[2].innerHTML = s.dateLimiteInscription;
+        tabTd[1].innerHTML = dateHeureDebut.toLocaleDateString("fr-FR");
+        tabTd[2].innerHTML = dateLimiteInscription.toLocaleDateString("fr-FR");
         tabTd[3].innerHTML = s.nbParticipantsInscrits + "/" + s.nbInscriptionsMax;
         tabTd[4].innerHTML = s.etat;
         tabTd[6].innerHTML = s.organisateur;
@@ -83,10 +85,17 @@ function isValidDate(d) {
 }
 
 function filtre(){
-    let tab2 =[];
-    tab2 = filtreNom(tab);
+    let tab2 =tabGlobal;
+    tab2 = filtreNom(tab2);
+
     tab2 = filtreCampus(tab2);
     tab2 = filtreSortiesOrganisateur(tab2);
+    tab2 = filtreSortiesInscrit(tab2);
+    tab2 = filtreNoInscrit(tab2);
+    tab2 = filtreSortiesPassees(tab2);
+
+    tab2 = filtreParDate(tab2);
+    //console.log(tab2);
     afficherSortie(tab2);
 }
 function filtreNom(tableau){
@@ -125,11 +134,78 @@ function filtreSortiesOrganisateur(tableau){
     if (checkboxOrganisateur.checked){
         for (let s of tableau){
             if (s.EstOrganisateur === true){
-                tab2.push();
+                tab2.push(s);
             }
         }
     }else{
         tab2 = tableau;
+    }
+    return tab2;
+}
+function filtreSortiesInscrit(tableau){
+    let tab2 = [];
+    let checkboxInscrit = document.querySelector('#checkboxInscrit');
+    if (checkboxInscrit.checked) {
+        for (let s of tableau){
+            if (s.userInscrit == true){
+                tab2.push(s);
+            }
+        }
+
+    }else{
+        tab2 = tableau;
+    }
+    return tab2;
+}
+function filtreNoInscrit(tableau){
+    let tab2 = [];
+    let checkboxNoInscrit = document.querySelector('#checkboxNoInscrit');
+    if (checkboxNoInscrit.checked){
+        for (let s of tableau){
+            if(s.userInscrit == false){
+                tab2.push(s);
+            }
+        }
+    }else{
+        tab2 =tableau;
+    }
+    return tab2;
+}
+function filtreSortiesPassees(tableau){
+    let tab2 = [];
+    let checkboxSortiesPassees = document.querySelector('#checkboxSortiesPassees');
+
+    if (checkboxSortiesPassees.checked){
+        for(let s of tableau){
+            if(s.etat == "Passée"){
+                tab2.push(s)
+            }
+        }
+    }else{
+        tab2 = tableau;
+    }
+    return tab2;
+}
+
+function filtreParDate(tableau) {
+    let tab2 = [];
+    let dateMin = document.querySelector('#dateMin').value;
+    let dateMax = document.querySelector('#dateMax').value;
+    if ((dateMin.length != 0) && (dateMax.length !=0)){
+        dateMin = new Date(dateMin);
+        dateMax = new Date(dateMax);
+        for(let s of tableau){
+            let dateDebut = new Date(s.dateHeureDebut);
+           // let dateLimite = new Date(s.dateLimiteInscription);
+            if( dateDebut >= dateMin){
+                if(dateDebut <= dateMax){
+                    tab2.push(s);
+                }
+            }
+
+        }
+    }else{
+        tab2 =tableau;
     }
     return tab2;
 }

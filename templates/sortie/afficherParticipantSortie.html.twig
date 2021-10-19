@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/styleRegister.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/StyleParticipantSortie.css') }}">
 {% endblock %}
 
 {% block title %} {% endblock %}
@@ -15,7 +16,7 @@
 
     {# On appelle les infos necessaires du profil de l'utilisateur en quesion
     qui se trouve dans le twig en question#}
-
+<div class="infos">
     <div class="pseudo">
         <label for=""></label>
         {{ utilisateur.username }}
@@ -44,15 +45,5 @@
     <div class="retour">
         <button onclick=" window.history.back();">Retour</button>
     </div>
-
-
-
-
-
-
-
-
+</div>
 {% endblock %}
-
-
-

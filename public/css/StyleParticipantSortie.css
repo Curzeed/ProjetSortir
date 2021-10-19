@@ -1,0 +1,9 @@
+div.infos{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div.infos>div{
+    margin-bottom: 5px;
+}

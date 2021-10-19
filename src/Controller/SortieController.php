@@ -123,9 +123,9 @@ class SortieController extends AbstractController
             $estOrganisateur = $s->verifSiOrganisateur($sortie, $this->getUser());
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
-            $info['dateHeureDebut'] = $sortie->getDateHeureDebut()->format('d/m/Y H:i');
+            $info['dateHeureDebut'] = $sortie->getDateHeureDebut();//->format('d/m/Y H:i');
             $info['duree'] = $sortie->getDuree();
-            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription()->format('d/m/Y H:i');
+            $info['dateLimiteInscription'] = $sortie->getDateLimiteInscription(); //->format('d/m/Y H:i');
             $info['nbInscriptionsMax'] = $sortie->getNbInscriptionsMax();
             $info['infosSortie'] = $sortie->getInfosSortie();
             $info['etat'] = $sortie->getEtat()->getLibelle();

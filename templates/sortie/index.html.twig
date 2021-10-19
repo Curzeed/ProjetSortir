@@ -25,16 +25,24 @@
             <label>Sorties dont je suis l'organisateur/trice </label>
         </div>
         <div>
-            <input type="checkbox" onclick="filtre()">
+            <input type="checkbox" onclick="filtre()" id="checkboxInscrit">
             <label>Sorties auxquelles je suis inscrit/e </label>
         </div>
         <div>
-            <input type="checkbox" onclick="filtre()">
+            <input type="checkbox" onclick="filtre()" id="checkboxNoInscrit">
             <label>Sorties auxquelles je ne suis pas inscrit/e </label>
         </div>
         <div>
-            <input type="checkbox" onclick="filtre()">
+            <input type="checkbox" onclick="filtre()" id="checkboxSortiesPassees">
             <label>Sorties passées </label>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label for="">Entre </label>
+            <input type="date" id="dateMin">
+            <label for="">Et </label>
+            <input type="date" id="dateMax" onchange="filtre()">
         </div>
     </div>
     {% for message in app.flashes('notice') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
@@ -42,12 +50,12 @@
             {{ message }}
         </div>
     {% endfor %}
-    {% for message in app.flashes('success') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
+    {% for message in app.flashes('success') %}
         <div class="flash-success">
             {{ message }}
         </div>
     {% endfor %}
-    {% for message in app.flashes('error') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
+    {% for message in app.flashes('error') %}
         <div class="flash-success">
             {{ message }}
         </div>
