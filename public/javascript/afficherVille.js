@@ -13,21 +13,23 @@ fetch(url).then(response => response.json())
 function afficherVille(tableau) {
     let body = document.querySelector('#myTbody');
     let template = document.querySelector('#ligne');
-    //let urlModif ...
-    //let urlSup ...
+    let urlModif ='http://localhost:8000/ville/modifier/'
+
+    let urlSup = 'http://localhost:8000/ville/supprimer/'
 
     body.innerHTML = '';
 
     for (let v of tableau) {
-        // let urlModif2 = urlModif+v.id;
-        // let urlSup2 = urlSup+v.id
+        let urlModif2 = urlModif+v.id;
+        let urlSup2 = urlSup+v.id
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
         tabTd[0].innerHTML = v.nom;
         tabTd[1].innerHTML = v.codePostal;
-        //tabTd[2].querySelector('a').setAttribute('href',urlModif2)
-        //tabTd[3].querySelector('a').setAttribute('href',urlSup2)
-
+        tabTd[2].querySelector('a').setAttribute('href',urlModif2);
+        tabTd[3].querySelector('a').setAttribute('href',urlSup2);
+        document.querySelector('#ville_nom').setAttribute('placeholder','Ville');
+        document.querySelector('#ville_codepostal').setAttribute('placeholder','Code Postal ');
         body.appendChild(clone);
 
     }
