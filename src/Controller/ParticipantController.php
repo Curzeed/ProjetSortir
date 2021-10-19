@@ -95,7 +95,7 @@ class ParticipantController extends AbstractController
          *@Route ("/participants/infos/{pseudo}" , name="participant_sortie")
          */
         public function afficherParticipantSortie( $pseudo, ParticipantRepository $pr){
-
+ 
             // On appelle le pseudo afin de recuperer les infos dans le twig"afficherParticipantSortie"
                 $utilisateur = ($pr->findOneBy(['username'=>$pseudo]));
                 return $this->render('sortie/afficherParticipantSortie.html.twig',
