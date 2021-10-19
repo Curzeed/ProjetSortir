@@ -80,12 +80,4 @@ class VilleController extends AbstractController
         return $this->redirectToRoute('afficher_ville');
     }
 
-    /**
-     * @Route ("/ville/ajouter/{id}", name="ville_ajouter")
-     */
-    public function ajouterVille(Ville $ville, Request $request){
-
-        return $this->renderForm('ville/afficherVille.html.twig', compact('formtest'));
-
-    }
 }

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block contenu %}
+    {{ form_start(formCampus) }}
+    {{ form_widget(formCampus) }}
+    <button>Envoyer</button>
+    {{ form_end(formCampus) }}
+
+    <template id="selecttemplate">
+        <option></option>
+    </template>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('javascript/afficherCampus.js') }}"></script>
+{% endblock %}
