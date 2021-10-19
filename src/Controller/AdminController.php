@@ -10,10 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin/pouvoirAdmin', name: 'admin_utilisateur')]
-    public function pouvoirAdmin(): Response
+    public function pouvoirAdmin()
     {
         $pouvoirAdmin = new participant;
         return $this->render('admin/pouvoirAdmin.html.twig',
             compact('pouvoirAdmin'));
-    }
+        }
 }
