@@ -73,8 +73,70 @@
                 </div>
             </div>
         </div>
+    {{ form_start(form) }}
+<div class="user">
+    <div class="container-fluid">
+        <div class="row-cols-auto">
+
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Téléphone</th>
+                        <th scope="col">Campus</th>
+                        <th scope="col">Mot de passe</th>
+                        <th scope="col">Agree terms</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="myTbody">
+                    </tbody>
+                    <td>{{ form_widget(form.username) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.nom) }}
+                    </td>
+
+                    <td>
+                        {{ form_widget(form.prenom) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.email) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.telephone) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.campus) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.plainPassword) }}
+                    </td>
+
+                    <td>
+                        {{ form_widget(form.agreeTerms) }}
+                    </td>
+
+                    <td>
+                        <button class="btn btn-secondary">Ajouter</button>
+                    </td>
 
 
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    {{ form_end(form) }}
+
+
+
+
+</div>
 
 
 

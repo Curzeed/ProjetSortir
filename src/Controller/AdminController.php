@@ -3,22 +3,44 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\ParticipantType;
+use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
 
     #[Route('/admin', name: 'admin_utilisateur')]
-    public function pouvoirAdmin(ParticipantRepository $pr,)
+    public function pouvoirAdmin(ParticipantRepository $pr,UserPasswordHasherInterface $userPasswordHasherInterface, Request $request)
     {
         $users = $pr->findAll();
-        return $this->render('admin/pouvoirAdmin.html.twig',
-            compact('users'));
+
+        $participant = new Participant();
+        $participant->setRoles(["ROLE_USER"]);
+        $participant->setActif(true);
+        $form = $this->createForm(RegistrationFormType::class , $participant);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $participant->setPassword(
+                $userPasswordHasherInterface->hashPassword(
+                    $participant,
+                    $form->get('plainPassword')->getData()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($participant);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_utilisateur');
+        }
+        return $this->render('admin/pouvoirAdmin.html.twig',['users'=>$users,
+            "form"=> $form->createView()
+            ]);
+
         }
 
     /**

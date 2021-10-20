@@ -51,7 +51,7 @@ function afficherSortie(tableau){
                 tabTd[10].querySelector('a').setAttribute('hidden', '');
             }
             let nouvelledate = new Date(s.dateLimiteInscription);
-            if(s.etat === 'Passée'){
+            if(s.etat == 'Passée' | s.etat == 'Cloturée' | s.etat == 'Annulée'){
                 tabTd[10].querySelector('a').setAttribute('hidden', '') ;
             }
             if(s.EstOrganisateur === false){
