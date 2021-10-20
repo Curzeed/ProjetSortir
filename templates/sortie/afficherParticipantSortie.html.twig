@@ -10,7 +10,7 @@
 
         {# On appelle l'image du profil qui se trouve dans le twig "infos" de l'utilisateur en quesion #}
         {% if app.user.image %}
-            <img src="{{ asset(app.user.image) }}" class="image" alt=""/>
+            <img src="{{ asset(utilisateur.image) }}" class="image" alt=""/>
         {% endif %}
     </div>
 
