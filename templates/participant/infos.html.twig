@@ -3,44 +3,47 @@
     <link rel="stylesheet" href="{{ asset('css/styleDetailUtilisateur.css') }}">
 {% endblock %}
 {% block contenu %}
-    <div class="formulaire">
+    <div class="container">
+        <div class="row">
+            {{ form_start(formModif) }}
+            <div class="username col-lg-4">
+                <label for="">Pseudo</label>
+                {{ form_widget(formModif.username, {'value' : app.user.userIdentifier}) }}
+            </div>
+            <div class="prenom col-lg-4">
+                <label for="">Prénom</label>
+                {{ form_widget(formModif.prenom, {'value' : app.user.prenom}) }}
+            </div>
+            <div class="nom prenom col-lg-4">
+                <label for="">Nom</label>
+                {{ form_widget(formModif.nom, {'value' : app.user.nom}) }}
+            </div>
+            <div class="telephone prenom col-lg-4">
+                <label for="">Téléphone</label>
+                {{ form_widget(formModif.telephone, {'value' : app.user.telephone}) }}
+            </div>
+            <div class="email prenom col-lg-4">
+                <label for="">Email</label>
+                {{ form_widget(formModif.email, {'value' : app.user.email}) }}
+            </div>
+            <div class="campus prenom col-lg-4">
+                <label for="">Campus</label>
+                {{ form_widget(formModif.campus, {'value' : app.user.campus}) }}
+            </div>
+            <div>
+                <a href="{{ path('modifier_mot_de_passe') }}">Modifier mon mot de passe</a>
+            </div>
+            <button class="btn btn-secondary prenom col-lg-1"> Enregistrer</button>
+            <button class="btn btn-secondary prenom col-lg-1"> Annuler</button>
+            {{ form_end(formModif) }}
 
-    {{ form_start(formModif) }}
-                    <div class="username">
-                        <label for="">Pseudo</label>
-                        {{ form_widget(formModif.username, {'value' : app.user.userIdentifier}) }}
-                    </div>
-                    <div class="prenom">
-                        <label for="">Prénom</label>
-                        {{ form_widget(formModif.prenom, {'value' : app.user.prenom}) }}
-                    </div>
-                    <div class="nom">
-                        <label for="">Nom</label>
-                        {{ form_widget(formModif.nom, {'value' : app.user.nom}) }}
-                    </div>
-                    <div class="telephone">
-                        <label for="">Téléphone</label>
-                        {{ form_widget(formModif.telephone, {'value' : app.user.telephone}) }}
-                    </div>
-                    <div class="email">
-                        <label for="">Email</label>
-                        {{ form_widget(formModif.email, {'value' : app.user.email}) }}
-                    </div>
-                    <div class="campus">
-                        <label for="">Campus</label>
-                        {{ form_widget(formModif.campus, {'value' : app.user.campus}) }}
-                    </div>
-                    <div>
-                        <a href="{{ path('modifier_mot_de_passe') }}">Modifier mon mot de passe</a>
-                    </div>
-                        <button class="btn btn-secondary"> Enregistrer</button>
-                        <button class="btn btn-secondary"> Annuler</button>
-                        {{ form_end(formModif) }}
-
+            {% if app.user.image %}
+                <img src="{{ asset(app.user.image) }}" class="image col-lg-2" alt=""/>
+            {% endif %}
+        </div>
     </div>
-    {% if app.user.image %}
-        <img src="{{ asset(app.user.image) }}" class="image" alt=""/>
-    {% endif %}
+
+
 
 
 {% endblock %}

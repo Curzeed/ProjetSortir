@@ -212,3 +212,15 @@ function filtreParDate(tableau) {
     }
     return tab2;
 }
+
+var options = {
+    animation : true,
+    delay : 2000
+};
+function toasty(){
+    var toast = document.querySelector('#liveToastBtn');
+
+    var toastELement = new bootstrap.Toast(toast, options);
+
+    toastELement.show();
+}

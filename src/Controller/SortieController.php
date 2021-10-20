@@ -120,7 +120,6 @@ class SortieController extends AbstractController
         foreach ($liste as $sortie){
             $s->verifSiDateEstPassee($sortie);
             $userParticipant = false;
-            $estOrganisateur = $s->verifSiOrganisateur($sortie, $this->getUser());
             $userParticipant = $s->verifSiUserEstInscrit($sortie->getParticipantsInscrits(), $this->getUser()->getId());
             $info['nom'] = $sortie->getNom();
             $info['dateHeureDebut'] = $sortie->getDateHeureDebut();//->format('d/m/Y H:i');
@@ -130,7 +129,7 @@ class SortieController extends AbstractController
             $info['infosSortie'] = $sortie->getInfosSortie();
             $info['etat'] = $sortie->getEtat()->getLibelle();
             $info['organisateur'] = $sortie->getOrganisateur()->getNom();
-            $info['EstOrganisateur'] = $estOrganisateur;
+            $info['EstOrganisateur'] = $s->verifSiOrganisateur($sortie, $this->getUser());
             $info['id'] = $sortie->getId();
             $info['nbParticipantsInscrits'] = count($sortie->getParticipantsInscrits());
             $info['siteOrga'] = $sortie->getCampus()->getNom();
