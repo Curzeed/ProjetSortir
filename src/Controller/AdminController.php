@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+
     #[Route('/admin', name: 'admin_utilisateur')]
     public function pouvoirAdmin(ParticipantRepository $pr,)
     {
@@ -21,6 +23,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route ("/admin/setActivity/{id}" , name="admin_setActivity")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function setActivity(Participant $id,EntityManagerInterface $em ){
         if($id->getActif() == 0){
@@ -35,6 +38,7 @@ class AdminController extends AbstractController
     }
     /**
      * @Route ("/admin/delete/{id}" , name="admin_delete")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deleteUser (Participant $id,EntityManagerInterface $em){
         $em->remove($id);
@@ -44,6 +48,7 @@ class AdminController extends AbstractController
     }
     /**
      * @Route ("/admin/role/{id}" , name="admin_role")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function role(Participant $p,EntityManagerInterface $em){
 

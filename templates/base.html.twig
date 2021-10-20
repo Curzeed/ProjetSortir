@@ -30,12 +30,7 @@
                             <img src="{{ asset('img/icons8-globe-terrestre-30.png') }}" alt="logo" style="width: 40px;">
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{ path('afficher_ville') }}">Villes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('afficher_campus') }}">Campus</a>
-                    </li>
+
                     <li class="nav-item">
                         {% if app.user %}
                         <a class="nav-link" href="{{ path('profil_participant' ,{'id' : app.user.id}) }}">Mon Profil</a>
@@ -46,15 +41,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('sortie_nouvelle',{'pseudo' : app.user.id}) }}">Nouvelle sortie</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{path('admin_utilisateur') }}">Administrateur</a>
-                    </li>
+
                         {% endif %}
                     {% if not app.user %}
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ path('app_login') }}">Login</a>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{path('app_register') }}">S'inscrire</a>
+                    {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ path('afficher_ville') }}">Villes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('afficher_campus') }}">Campus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{path('admin_utilisateur') }}">Administrateur</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>

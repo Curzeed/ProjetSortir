@@ -6,6 +6,7 @@ use App\Entity\Ville;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class VilleController extends AbstractController
 
     /**
      * @Route ("/villes/api", name="api_ville")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function apiVille(VilleRepository $vr){
         $liste = $vr->findAll();
@@ -38,6 +40,7 @@ class VilleController extends AbstractController
 
     /**
      * @Route ("/villes/afficher" , name="afficher_ville")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function afficherVille( VilleRepository $vr, Request $request){
         $villes = $vr->findAll();
@@ -56,7 +59,7 @@ class VilleController extends AbstractController
 
     /**
      * @Route ("/ville/modifier/{id}", name="ville_modifier")
-     *
+     *@IsGranted("ROLE_ADMIN")
      */
     public function modifierVille(Ville $ville, VilleRepository $vr, EntityManagerInterface $em, Request $request ){
         $formVille = $this->createForm(VilleType::class,$ville);
@@ -73,6 +76,7 @@ class VilleController extends AbstractController
     }
     /**
      * @Route ("/ville/supprimer/{id}", name="ville_supprimer")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function supprimerVille(Ville $ville, EntityManagerInterface $em ){
         $em->remove($ville);

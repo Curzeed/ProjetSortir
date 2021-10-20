@@ -46,6 +46,7 @@ class CampusController extends AbstractController
     }
     /**
      * @Route ("/campus/afficher" , name="afficher_campus")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function afficherCampus( CampusRepository $cr, Request $request){
         $campus1 = $cr->findAll();
@@ -64,7 +65,7 @@ class CampusController extends AbstractController
 
     /**
      * @Route ("/campus/modifier/{id}", name="campus_modifier")
-     *
+     *@IsGranted("ROLE_ADMIN")
      */
     public function modifierVille(Campus $campus, CampusRepository $cr, EntityManagerInterface $em, Request $request ){
         $formCampus = $this->createForm(CampusType::class,$campus);
@@ -80,6 +81,7 @@ class CampusController extends AbstractController
 
     /**
      * @Route ("/campus/supprimer/{id}", name="campus_supprimer")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function supprimerCampus(Campus $campus, EntityManagerInterface $em ){
         $em->remove($campus);
@@ -89,6 +91,7 @@ class CampusController extends AbstractController
 
     /**
      * @Route ("/campus/api", name="api_campus")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function apiCampus(CampusRepository $cr){
         $liste = $cr->findAll();

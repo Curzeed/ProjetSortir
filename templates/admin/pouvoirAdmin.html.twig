@@ -59,7 +59,7 @@
                                     <a href="{{ path('admin_delete', {'id': user.id}) }}"><i class="far fa-trash-alt"></i></a>
                                 </td>
                                     <td>
-                                        {% if user.roles[0] == 'ROLE_ADMIN' %}
+                                        {% if  user.roles[0] == 'ROLE_ADMIN'  %}
                                             <a href="{{ path('admin_role', {'id': user.id}) }}">Passer utilisateur</a>
                                         {% else %}
                                             <a href="{{ path('admin_role', {'id': user.id}) }}">Passer admin</a>
