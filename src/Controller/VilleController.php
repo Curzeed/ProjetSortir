@@ -24,7 +24,7 @@ class VilleController extends AbstractController
 
     /**
      * @Route ("/villes/api", name="api_ville")
-     * @IsGranted("ROLE_ADMIN")
+     *
      */
     public function apiVille(VilleRepository $vr){
         $liste = $vr->findAll();

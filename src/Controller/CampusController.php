@@ -91,7 +91,7 @@ class CampusController extends AbstractController
 
     /**
      * @Route ("/campus/api", name="api_campus")
-     * @IsGranted("ROLE_ADMIN")
+     *
      */
     public function apiCampus(CampusRepository $cr){
         $liste = $cr->findAll();
