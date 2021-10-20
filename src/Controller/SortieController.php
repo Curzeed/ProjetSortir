@@ -137,8 +137,8 @@ class SortieController extends AbstractController
     public function modifier(Sortie $sortie, SortieRepository $sr, Services $s, Request $request, LieuRepository $lr, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
-
-        if ($isOrga == true ){
+        $role = $user->getRoles();
+        if ($isOrga == true || in_array('ROLE_ADMIN',$role) ){
             $formSortie = $this->createForm(SortieType::class, $sortie);
             $formSortie->handleRequest($request);
 
