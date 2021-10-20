@@ -124,6 +124,7 @@ class SortieController extends AbstractController
             $info['siteOrga'] = $sortie->getCampus()->getNom();
             $info['idcampus'] = $sortie->getCampus()->getId();
             $info['userInscrit'] = $userParticipant;
+            $info['rolesUser'] = $this->getUser()->getRoles();
 
             $tab []= $info;
 
@@ -169,7 +170,9 @@ class SortieController extends AbstractController
         $etat = $er->find(6);
         //$sortie = $sr->find($id);
         $isOrga = $s->verifSiOrganisateur($sortie, $user);
-        if($isOrga == true){
+        $role = $user->getRoles();
+        $roles = ['ROLE_ADMIN'];
+        if($isOrga == true || in_array('ROLE_ADMIN',$role)){
             $form = $this->createForm(AnnulerSortieType::class, $sortie);
             $form->handleRequest($request);
 

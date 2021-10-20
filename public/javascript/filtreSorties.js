@@ -54,7 +54,7 @@ function afficherSortie(tableau){
             if(s.etat == 'Passée' | s.etat == 'Cloturée' | s.etat == 'Annulée'){
                 tabTd[10].querySelector('a').setAttribute('hidden', '') ;
             }
-            if(s.EstOrganisateur === false){
+            if(s.EstOrganisateur === false && s.rolesUser.includes('ROLE_ADMIN') === false){
                 tabTd[8].querySelector('a').setAttribute('hidden','');
                 tabTd[11].querySelector('a').setAttribute('hidden','');
             }
