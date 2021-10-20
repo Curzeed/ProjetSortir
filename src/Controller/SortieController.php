@@ -36,16 +36,6 @@ class SortieController extends AbstractController
     }
 
     /**
-     *
-     * @Route ("/sorties/filter", name="liste_sorties_filtree")
-     * @IsGranted("ROLE_USER")
-     */
-    public function listeSortieFilter(SortieRepository $sr) : Response{
-
-        return $this->render('sortie/index.html.twig');
-    }
-
-    /**
      * @Route ("/sorties/nouvelle/", name="sortie_nouvelle")
      * @IsGranted("ROLE_USER")
      */
@@ -75,7 +65,6 @@ class SortieController extends AbstractController
     public function afficherSortie(SortieRepository $sr, $id) : Response{
         $sortie = $sr->findOneBy(['id'=>$id]);
         return $this->render('sortie/affiche_sortie.html.twig', compact('sortie'));
-
     }
     /**
      * @Route("/sorties/inscription/{id}", name="sortie_inscription")

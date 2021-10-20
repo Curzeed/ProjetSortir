@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\CsvType;
 use App\Form\ParticipantType;
 use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
@@ -20,6 +23,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'admin_utilisateur')]
     public function pouvoirAdmin(ParticipantRepository $pr,UserPasswordHasherInterface $userPasswordHasherInterface, Request $request)
     {
+
         $users = $pr->findAll();
 
         $participant = new Participant();
@@ -84,5 +88,34 @@ class AdminController extends AbstractController
         $em->persist($p);
         $em->flush();
         return $this->redirectToRoute('admin_utilisateur');
+    }
+    /**
+     * @Route ("/admin/csv" , name="admin_role")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function readCsv(Request $request, SluggerInterface $slugger){
+        $file = '';
+        $form = $this->createForm(CsvType::class,$file);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newFile = $form->get('file')->getData();
+            if ($newFile){
+                $originalFileName = pathinfo($newFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFileName);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$newFile->guessExtension();
+
+                try{
+                    $newFile->move(
+                        $this->getParameter('csvDirectory'),
+                        $newFilename
+                    );
+                } catch (FileException $e){
+                    //
+                }
+                $file = $newFilename;
+            }
+            return $this->redirectToRoute('');
+        }
     }
 }
