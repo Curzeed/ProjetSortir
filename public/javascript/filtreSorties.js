@@ -42,6 +42,7 @@ function afficherSortie(tableau){
             tabTd[4].innerHTML = s.etat;
             tabTd[6].querySelector('a').innerHTML = s.organisateur;
             tabTd[6].querySelector('a').setAttribute('href',urlDetailsProfil2);
+            tabTd[6].querySelector('a').setAttribute('class','Lienorganisateur');
             tabTd[9].querySelector('a').setAttribute('href',urlModif2);
             tabTd[7].querySelector('a').setAttribute('href', urlDesister2);
             tabTd[10].querySelector('a').setAttribute('href',urlInscription2);
