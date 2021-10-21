@@ -80,7 +80,6 @@ class AdminController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public function readCsv(Request $request, CampusRepository $cp, EntityManagerInterface $em){
-        $row = 1;
         $form = $this->createForm(CsvType::class);
         $form->handleRequest($request);
 
@@ -110,7 +109,7 @@ class AdminController extends AbstractController
             }
 
         }
-        }
+}
         return $this->render('admin/ajoutCsv.html.twig',['form'=>$form->createView()]);
     }
     /**
