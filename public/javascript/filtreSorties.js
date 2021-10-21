@@ -19,7 +19,7 @@ function afficherSortie(tableau){
     let urlInscription = 'http://localhost:8000/sorties/inscription/';
     let urlModifSortie = 'http://localhost:8000/sorties/modifier/';
     let urlAnnulerSortie = 'http://localhost:8000/sorties/annuler/';
-
+    let urlDetailsProfil = 'http://localhost:8000/participants/infos/';
     body.innerHTML = '';
     for (let s of tableau){
         let urlInscription2 = urlInscription+s.id;
@@ -32,13 +32,16 @@ function afficherSortie(tableau){
         let date = new Date(Date.now());
         let clone = template.content.cloneNode(true);
         let tabTd = clone.querySelectorAll('td');
+        let urlDetailsProfil2 = urlDetailsProfil+s.userIdentifier;
+
         if(dateHeureDebut.getMonth() != date.getMonth()-1){
             tabTd[0].innerHTML = s.nom;
             tabTd[1].innerHTML = dateHeureDebut.toLocaleDateString("fr-FR");
             tabTd[2].innerHTML = dateLimiteInscription.toLocaleDateString("fr-FR");
             tabTd[3].innerHTML = s.nbParticipantsInscrits + "/" + s.nbInscriptionsMax;
             tabTd[4].innerHTML = s.etat;
-            tabTd[6].innerHTML = s.organisateur;
+            tabTd[6].querySelector('a').innerHTML = s.organisateur;
+            tabTd[6].querySelector('a').setAttribute('href',urlDetailsProfil2);
             tabTd[9].querySelector('a').setAttribute('href',urlModif2);
             tabTd[7].querySelector('a').setAttribute('href', urlDesister2);
             tabTd[10].querySelector('a').setAttribute('href',urlInscription2);
