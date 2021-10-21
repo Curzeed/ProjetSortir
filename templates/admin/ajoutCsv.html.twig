@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout du csv!{% endblock %}
+
+{% block contenu %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn-secondary">Envoyer son csv</button>
+    {{ form_end(form) }}
+{% endblock %}

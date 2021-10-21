@@ -19,8 +19,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
-
     #[Route('/admin', name: 'admin_utilisateur')]
+    #[IsGranted('ROLE_ADMIN')]
     public function pouvoirAdmin(ParticipantRepository $pr,UserPasswordHasherInterface $userPasswordHasherInterface, Request $request)
     {
 
@@ -41,11 +41,12 @@ class AdminController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('admin_utilisateur');
         }
-        return $this->render('admin/pouvoirAdmin.html.twig',['users'=>$users,
-            "form"=> $form->createView()
-            ]);
+        return $this->renderForm('admin/pouvoirAdmin.html.twig',['users'=>$users,
+            "form"=>$form
+        ]);
 
-        }
+    }
+
 
     /**
      * @Route ("/admin/setActivity/{id}" , name="admin_setActivity")
@@ -93,29 +94,29 @@ class AdminController extends AbstractController
      * @Route ("/admin/csv" , name="admin_role")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function readCsv(Request $request, SluggerInterface $slugger){
-        $file = '';
-        $form = $this->createForm(CsvType::class,$file);
+    public function readCsv(Request $request){
+        $row = 1;
+        $form = $this->createForm(CsvType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $newFile = $form->get('file')->getData();
             if ($newFile){
                 $originalFileName = pathinfo($newFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFileName);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$newFile->guessExtension();
-
-                try{
-                    $newFile->move(
-                        $this->getParameter('csvDirectory'),
-                        $newFilename
-                    );
-                } catch (FileException $e){
-                    //
+                $originalFileName = fopen($newFile,"r");
+                if(($handle = fopen($newFile,"r"))!== false){
+                    while (($data = fgetcsv($handle,1000,","))!== false){
+                        //Rendu des lignes
+                        dd($data);
+                        //
+                        $row++;
+                    }
+                    fclose($handle);
                 }
-                $file = $newFilename;
             }
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute('admin_utilisateur');
         }
+        return $this->render('admin/ajoutCsv.html.twig',['form'=>$form->createView()]);
     }
+
 }
