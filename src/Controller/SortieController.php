@@ -125,7 +125,7 @@ class SortieController extends AbstractController
             $info['idcampus'] = $sortie->getCampus()->getId();
             $info['userInscrit'] = $userParticipant;
             $info['rolesUser'] = $this->getUser()->getRoles();
-            $info['userIdentifier'] = $this->getUser()->getUserIdentifier();
+            $info['userIdentifier'] = $sortie->getOrganisateur()->getUserIdentifier();
             $tab []= $info;
 
         }
