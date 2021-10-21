@@ -6,46 +6,48 @@
 {% block title %}Liste des sorties{% endblock %}
 
 {% block contenu %}
-<div>
-    <div class="titre">
-        <h3> Filtrer les sorties</h3>
-    </div>
+    <div class="filtres">
+        <div>
+            <div class="titre">
+                <h3> Filtrer les sorties</h3>
+            </div>
 
-    <div>
-        <select id="listeCampus" onchange="filtre()">
-            <option value="0">Séléctionnez une ville : </option>
-        </select>
-    </div>
+            <div>
+                <select id="listeCampus" onchange="filtre()">
+                    <option value="0">Séléctionnez une ville : </option>
+                </select>
+            </div>
 
-<div class="col-4">
-    <input type="text" id="sortie" class="form-control" onKeyUp="filtre()" >
+        <div class="col-4">
+            <input type="text" id="sortie" class="form-control" onKeyUp="filtre()" >
+        </div>
+            <div>
+                <div>
+                    <input type="checkbox" onclick="filtre()" id="checkboxOrganisateur">
+                    <label>Sorties dont je suis l'organisateur/trice </label>
+                </div>
+                <div>
+                    <input type="checkbox" onclick="filtre()" id="checkboxInscrit">
+                    <label>Sorties auxquelles je suis inscrit/e </label>
+                </div>
+                <div>
+                    <input type="checkbox" onclick="filtre()" id="checkboxNoInscrit">
+                    <label>Sorties auxquelles je ne suis pas inscrit/e </label>
+                </div>
+                <div>
+                    <input type="checkbox" onclick="filtre()" id="checkboxSortiesPassees">
+                    <label>Sorties passées </label>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="">Entre </label>
+                    <input type="date" id="dateMin">
+                    <label for="">Et </label>
+                    <input type="date" id="dateMax" onchange="filtre()">
+                </div>
+            </div>
 </div>
-    <div>
-        <div>
-            <input type="checkbox" onclick="filtre()" id="checkboxOrganisateur">
-            <label>Sorties dont je suis l'organisateur/trice </label>
-        </div>
-        <div>
-            <input type="checkbox" onclick="filtre()" id="checkboxInscrit">
-            <label>Sorties auxquelles je suis inscrit/e </label>
-        </div>
-        <div>
-            <input type="checkbox" onclick="filtre()" id="checkboxNoInscrit">
-            <label>Sorties auxquelles je ne suis pas inscrit/e </label>
-        </div>
-        <div>
-            <input type="checkbox" onclick="filtre()" id="checkboxSortiesPassees">
-            <label>Sorties passées </label>
-        </div>
-    </div>
-    <div>
-        <div>
-            <label for="">Entre </label>
-            <input type="date" id="dateMin">
-            <label for="">Et </label>
-            <input type="date" id="dateMax" onchange="filtre()">
-        </div>
-    </div>
     {% for message in app.flashes('notice') %} {# Ajout d'un message flash si l'utilisateur tente de s'inscrire à une sortie avec un état qui ne le permet pas (voir SortieController (fonction addInscriptionSortie))#}
         <div class="flash-notice">
             {{ message }}
@@ -61,64 +63,64 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container-fluid">
-        <div class="row-cols-auto">
-
-            <div class="col-12">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nom de la sortie</th>
-                        <th scope="col">Date de la sortie</th>
-                        <th scope="col">Clôture</th>
-                        <th scope="col">Inscrits/places</th>
-                        <th scope="col">Etat</th>
-                        <th scope="col">Inscrit</th>
-                        <th scope="col">Organisateur</th>
-                        <th scope="col" colspan="2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="myTbody">
-                    </tbody>
-                </table>
+    </div>
+    <div class="listesorties">
+            <div class="container-fluid">
+                <div class="row-cols-auto">
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nom de la sortie</th>
+                                <th scope="col">Date de la sortie</th>
+                                <th scope="col">Clôture</th>
+                                <th scope="col">Inscrits/places</th>
+                                <th scope="col">Etat</th>
+                                <th scope="col">Inscrit</th>
+                                <th scope="col">Organisateur</th>
+                                <th scope="col" colspan="2">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="myTbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <template id="ligne">
+                        <tr>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td><i class="fas fa-check" ></i></td>
+                            <td><a href=""></a>6</td>
+                            <!-- 7-->
+                             <td>
+                                <a href="#" class="btn btn-secondary" id="btnDesist">Se désister</a>
+                            </td>
+                            <!-- 8-->
+                            <td>
+                                <a href="#" class="btn btn-secondary">Modifier</a>
+                            </td>
+                            <!-- 9-->
+                            <td>
+                                <a href="#"class="btn btn-secondary">Afficher</a>
+                            </td>
+                            <!-- 10 -->
+                            <td>
+                                <a href="#"class="btn btn-secondary">S'inscrire</a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-secondary">Annuler</a>
+                            </td>
+                        </tr>
+                </template>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <template id="ligne">
-
-                <tr>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td><i class="fas fa-check" ></i></td>
-                    <td><a href=""></a>6</td>
-                    <!-- 7-->
-                     <td>
-                        <a href="#" class="btn btn-secondary" id="btnDesist">Se désister</a>
-                    </td>
-                    <!-- 8-->
-                    <td>
-                        <a href="#" class="btn btn-secondary">Modifier</a>
-                    </td>
-                    <!-- 9-->
-                    <td>
-                        <a href="#"class="btn btn-secondary">Afficher</a>
-                    </td>
-                    <!-- 10 -->
-                    <td>
-                        <a href="#"class="btn btn-secondary">S'inscrire</a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-secondary">Annuler</a>
-                    </td>
-                </tr>
-
-        </template>
-    </div>
-</div>
     <template id="templateCampus">
         <option></option>
     </template>

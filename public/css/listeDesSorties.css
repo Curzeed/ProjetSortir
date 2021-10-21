@@ -45,3 +45,11 @@ tr{
     border-radius: 10px;
     border: solid rgba(255, 0, 0, 0.87);
 }
+.filtres{
+    margin-left: 3%;
+    margin-right: 10%;
+}
+.listesorties{
+    margin-left: 2%;
+    margin-right: 2%;
+}
