@@ -3,43 +3,50 @@
     <link rel="stylesheet" href="{{ asset('css/styleDetailUtilisateur.css') }}">
 {% endblock %}
 {% block contenu %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             {{ form_start(formModif) }}
-            <div class="username col-lg-4">
+            {% if app.user.image %}
+                <img src="{{ asset(app.user.image) }}" class="image col-lg-2" id="img" alt=""/>
+            {% endif %}
+            <div class="username col-lg-3">
                 <label for="">Pseudo</label>
                 {{ form_widget(formModif.username, {'value' : app.user.userIdentifier}) }}
             </div>
-            <div class="prenom col-lg-4">
+            <div class="prenom col-lg-3">
                 <label for="">Prénom</label>
                 {{ form_widget(formModif.prenom, {'value' : app.user.prenom}) }}
             </div>
-            <div class="nom prenom col-lg-4">
+            <div class="nom prenom col-lg-3">
                 <label for="">Nom</label>
                 {{ form_widget(formModif.nom, {'value' : app.user.nom}) }}
             </div>
-            <div class="telephone prenom col-lg-4">
+            <div class="telephone prenom col-lg-3">
                 <label for="">Téléphone</label>
                 {{ form_widget(formModif.telephone, {'value' : app.user.telephone}) }}
             </div>
-            <div class="email prenom col-lg-4">
+            <div class="email prenom col-lg-3">
                 <label for="">Email</label>
                 {{ form_widget(formModif.email, {'value' : app.user.email}) }}
             </div>
-            <div class="campus prenom col-lg-4">
+            <div class="campus prenom col-lg-3">
                 <label for="">Campus</label>
                 {{ form_widget(formModif.campus, {'value' : app.user.campus}) }}
             </div>
             <div>
                 <a href="{{ path('modifier_mot_de_passe') }}">Modifier mon mot de passe</a>
             </div>
-            <button class="btn btn-secondary prenom col-lg-1"> Enregistrer</button>
-            <button class="btn btn-secondary prenom col-lg-1"> Annuler</button>
+            <div class="espace"></div>
+            <div class="campus prenom col-lg-3">
+                <label for="">Image</label>
+                {{ form_widget(formModif.image) }}
+            </div>
+            <div class="espace"></div>
+            <button class="btn btn-secondary prenom col-lg-2"> Enregistrer</button>
+            <button class="btn btn-secondary prenom col-lg-2"> Annuler</button>
             {{ form_end(formModif) }}
 
-            {% if app.user.image %}
-                <img src="{{ asset(app.user.image) }}" class="image col-lg-2" alt=""/>
-            {% endif %}
+
         </div>
     </div>
 

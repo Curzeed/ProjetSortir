@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\CsvType;
 use App\Form\ParticipantType;
 use App\Form\RegistrationFormType;
+use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -94,27 +95,37 @@ class AdminController extends AbstractController
      * @Route ("/admin/csv" , name="admin_role")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function readCsv(Request $request){
+    public function readCsv(Request $request, CampusRepository $cp, EntityManagerInterface $em){
         $row = 1;
         $form = $this->createForm(CsvType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newFile = $form->get('file')->getData();
-            if ($newFile){
-                $originalFileName = pathinfo($newFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $originalFileName = fopen($newFile,"r");
-                if(($handle = fopen($newFile,"r"))!== false){
-                    while (($data = fgetcsv($handle,1000,","))!== false){
-                        //Rendu des lignes
-                        dd($data);
-                        //
-                        $row++;
-                    }
-                    fclose($handle);
-                }
+            $fichier = $form->get('fichier')->getData();
+            $path = $fichier->getPathName();
+            $csvFile = file($path);
+
+            foreach ($csvFile as $line) {
+                $data[] = str_getcsv($line);
+                $datafinal[] = explode(';',$line);
+
             }
-            return $this->redirectToRoute('admin_utilisateur');
+
+        }foreach ($datafinal as $ligne){
+            $p = new Participant();
+            $campus =  $cp->find($ligne[0]);
+            $p->setCampus($campus);
+            $p->setUsername($ligne[1]);
+            $p->setRoles([$ligne[2]]);
+            $p->setPassword($ligne[3]);
+            $p->setNom($ligne[4]);
+            $p->setPrenom($ligne[5]);
+            $p->setTelephone($ligne[6]);
+            $p->setEmail($ligne[7]);
+            $p->setActif($ligne[8]);
+            $p->setImage($ligne[9]);
+            $em->persist($p);
+            $em->flush();
         }
         return $this->render('admin/ajoutCsv.html.twig',['form'=>$form->createView()]);
     }

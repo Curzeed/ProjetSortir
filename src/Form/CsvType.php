@@ -13,19 +13,9 @@ class CsvType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('file',FileType::class,[
+            ->add('fichier',FileType::class,[
                 'mapped'=>false,
                 'required'=>false,
-                'constraints'=>[
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ],
             ])
         ;
     }
