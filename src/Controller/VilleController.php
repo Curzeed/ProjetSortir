@@ -40,7 +40,7 @@ class VilleController extends AbstractController
 
     /**
      * @Route ("/villes/afficher" , name="afficher_ville")
-     * @IsGranted("ROLE_ADMIN")
+     *
      */
     public function afficherVille( VilleRepository $vr, Request $request){
         $villes = $vr->findAll();

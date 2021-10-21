@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleGerer.css') }}">
+
 {% endblock %}
 
 {% block title %} {% endblock %}
@@ -18,8 +20,10 @@
 {#        </div>#}
 
     {% endfor %}
-
+    <h1 style="text-align: center">Gérer les villes</h1>
+    <h2>Filtrer les villes :</h2>
     <div class="col-4">
+        <label for="ville">Le nom contient :</label>
         <input type="text" id="ville" class="form-control" onKeyUp="filtre1()" >
 
     </div>
