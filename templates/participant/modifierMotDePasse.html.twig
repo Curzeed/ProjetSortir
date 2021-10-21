@@ -1,18 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}    <h1>babbababa</h1>
+{% block title %}
+    Modifier mon mot de passe
 {% endblock %}
 
 {% block contenu%}
-    {% for infosUser in infos %}
-        {{ infosUser.username }}
+
+    {{ form_start(formModif) }}
+
+                {{ form_widget(formModif) }}
+    {% for message in app.flashes('error') %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
     {% endfor %}
-    {{ form_start(formModifMotDePasse) }}
+    <button>Modifier mon mot de Passe</button>
 
-                {{ form_widget(formModifMotDePasse.password) }}
-
-    <button>aba</button>
-    {{ form_end(formModifMotDePasse) }}
+    {{ form_end(formModif) }}
 {% endblock %}
 
 {% block body %}

@@ -2,23 +2,22 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/StyleParticipantSortie.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&display=swap" rel="stylesheet">
 {% endblock %}
 
-{% block title %} {% endblock %}
+{% block title %}Profil de : {{ utilisateur.username }}{% endblock %}
 {% block contenu %}
-    <div class="photo">
-
         {# On appelle l'image du profil qui se trouve dans le twig "infos" de l'utilisateur en quesion #}
         {% if app.user.image %}
-            <img src="{{ asset(utilisateur.image) }}" class="image" alt=""/>
+            <img src="{{ asset(utilisateur.image) }}" class="image" id="img" alt=""/>
         {% endif %}
-    </div>
-
     {# On appelle les infos necessaires du profil de l'utilisateur en quesion
     qui se trouve dans le twig en question#}
 <div class="infos">
     <div class="pseudo">
-        <label for=""></label>
+        <label for="">Pseudo : </label>
         {{ utilisateur.username }}
     </div>
     <div class="prenom">

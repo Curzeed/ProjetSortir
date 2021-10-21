@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,20 +19,14 @@ class ModifMotDePasseType extends AbstractType
     {
         $builder
 
-            ->add('oldPassword', PasswordType::class)
-            ->add('Password', RepeatedType::class, array(
+            ->add('oldPassword',PasswordType::class,['label'=>"Ancien mot de passe"])
+            ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-                'invalid_message' => 'Les deux mots de passe doivent être identiques',
-                'options' => array(
-                    'attr' => array(
-                        'class' => 'password-field'
-                    )
-                ),
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-            ))
-
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password']])
         ;
     }
 
@@ -36,7 +34,6 @@ class ModifMotDePasseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Participant::class,
         ]);
     }
 }

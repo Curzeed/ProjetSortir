@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -64,7 +66,7 @@ class ParticipantController extends AbstractController
             //....Flush = envoie les infos
             $em->flush();
             // Une fois fait, faire un "redirectToRoute"afin de l'envoyer à une page "souhaité"
-            return $this->redirectToRoute('app_logout');
+            return $this->redirectToRoute('liste_sorties');
         }
         $infos = $pr->findBy(["id" => $id]);
         return $this->renderForm('participant/infos.html.twig',
@@ -74,21 +76,31 @@ class ParticipantController extends AbstractController
     /**
      * @Route ("/modifierMotDePasse" , name="modifier_mot_de_passe")
      */
-    public function modifierMotDePasse(EntityManagerInterface $em, Request $request, ParticipantRepository $pr): Response
+    public function modifierMotDePasse(Request $request,
+                                       UserPasswordHasherInterface $passwordEncoder,
+                                       EntityManagerInterface $em): Response
     {
-        $newMotDePasse = new Participant();
-        $formModifMotDePasse = $this->createForm(ModifMotDePasseType::class, $newMotDePasse);
-        $formModifMotDePasse->handleRequest($request);
-        if ($formModifMotDePasse->isSubmitted() && $formModifMotDePasse->isValid()) {
-            $em->persist($newMotDePasse);
-            $em->flush();
-            $infos = $pr->findBy(["password" => $newMotDePasse]);
-            return $this->render('participant/modifierMotDePasse.html.twig',
-                compact('formModifMotDePasse'));
+        $user = $this->getUser();
+        $formModif = $this->createForm(ModifMotDePasseType::class);
+
+        $formModif->handleRequest($request);
+        if ($formModif->isSubmitted() && $formModif->isValid()) {
+            $nouveaumdp = $formModif->getData()['newPassword'];
+            $ancienMdp = $formModif->getData()['oldPassword'];
+            if($passwordEncoder->isPasswordValid($user, $ancienMdp)){
+
+                    $passwordHash = $passwordEncoder->hashPassword($user, $nouveaumdp);
+                    $user->setPassword($passwordHash);
+                    $em->flush();
+
+                return $this->redirectToRoute('liste_sorties');
+            }else{
+                $this->addFlash('error',"Votre ancien mot de passe ne correspond pas à celui que vous avez
+                rentré !");
+            }
         }
-        $infos = $pr->findBy(["password" => $newMotDePasse]);
-        return $this->render('participant/modifierMotDePasse.html.twig',
-            compact('formModifMotDePasse'));
+
+        return $this->renderForm('participant/modifierMotDePasse.html.twig',compact('formModif'));
     }
 
         /**
