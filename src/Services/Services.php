@@ -35,6 +35,11 @@ class Services
                 $passee = $this->repoEtat->find(5);
                 $sortie->setEtat($passee);
             }
+            if($sortie->getEtat()->getId() != 3){
+                $this->em->persist($sortie);
+                $this->em->flush();
+                return $sortie;
+            }
             else{
                 $publie = $this->repoEtat->find(2);
                 $sortie->setEtat($publie);
