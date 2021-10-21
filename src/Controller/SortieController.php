@@ -69,22 +69,30 @@ class SortieController extends AbstractController
     /**
      * @Route("/sorties/inscription/{id}", name="sortie_inscription")
      */
-    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em): Response{
+    public function addInscriptionSortie(  Sortie $sortie, EntityManagerInterface $em, EtatRepository $er): Response{
 
         $user = $this->getUser();
         $tabEtat = array("Clôturée","Passée","Annulée");
         $etatActuelSortie = $sortie->getEtat()->getLibelle();
+        $sortie->setEtat($sortie->getEtat());
         if(in_array($etatActuelSortie,$tabEtat) ){
             $this->addFlash('notice',
                 "Vous ne pouvez pas vous inscrire à cette sortie car elle est ". $sortie->getEtat()->getLibelle());
             return $this->redirectToRoute('liste_sorties');
-        }else{
-            $this->addFlash('success', "
-            Votre inscription à bien été prise en compte
-            ");
-            $sortie->addParticipantsInscrit($user);
-            $em->persist($sortie);
-            $em->flush();
+        }if(count($sortie->getParticipantsInscrits()) == $sortie->getNbInscriptionsMax()){
+            $cloture = $er->find(3);
+            $sortie->setEtat($cloture);
+            $this->addFlash('error', 'La sortie est déjà complète');
+            return $this->redirectToRoute('liste_sorties');
+        }
+            else{
+
+                $this->addFlash('success', "
+                Votre inscription à bien été prise en compte
+                ");
+                $sortie->addParticipantsInscrit($user);
+                $em->persist($sortie);
+                $em->flush();
         }
 
 
