@@ -29,16 +29,11 @@ class Services
     function verifSiDateEstPassee(Sortie $sortie){
         $today = date("Y-m-d");
         $today_dt = new \DateTime($today);
-        $dateSortie = $sortie->getDateHeureDebut();
+        $dateSortie = $sortie->getDateLimiteInscription();
         if($sortie->getEtat()->getId() != 6){
             if ($today_dt > $dateSortie){
                 $passee = $this->repoEtat->find(5);
                 $sortie->setEtat($passee);
-            }
-            if($sortie->getEtat()->getId() == 3){
-                $this->em->persist($sortie);
-                $this->em->flush();
-                return $sortie;
             }
             else{
                 $publie = $this->repoEtat->find(2);
