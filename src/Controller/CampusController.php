@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CampusController extends AbstractController
 {
-    #[Route('/', name: 'campus_index', methods: ['GET'])]
+    #[Route('/campus', name: 'campus_index', methods: ['GET'])]
     public function index(CampusRepository $campusRepository): Response
     {
         return $this->render('campus/index.html.twig', [
